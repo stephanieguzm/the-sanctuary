@@ -1,4 +1,4 @@
-const bookings = [
+const bookingsData = [
   {
     id: "5fwrgu4i7k55hl6t8",
     userID: 1,
@@ -60,3 +60,5 @@ const bookings = [
     roomNumber: 2
   },
 ];
+
+export default bookingsData;
