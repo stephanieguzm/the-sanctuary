@@ -133,8 +133,10 @@ describe('Customer', () => {
     expect(customer1.currentBookings).to.deep.equal([]);
   });
   
-  // it('should be able to retrieve all bookings for customer', () => {
+  it('should be able to calculate the total amount customer has spent on bookings', () => {
+    customer1.calculateTotalAmountSpent();
 
-  // });
+    expect(customer1.totalAmountSpent).to.equal()
+  });
 });
 

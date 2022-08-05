@@ -8,11 +8,11 @@ class Customer {
     this.pastBookings = [];
     this.upcomingBookings = [];
     this.currentBookings = [];
+    this.totalAmountSpent = 0;
   };
 
   filterBookings(hotel) {
     this.bookings = hotel.bookings.filter(booking => booking.userID === this.id)
-    console.log(this.bookings)
     return this.bookings;
   };
 
@@ -28,6 +28,10 @@ class Customer {
     })
   };
 
+  calculateTotalAmountSpent() {
+    //iterate over this.bookings to tap into the roomNumber property
+    //then go to the Room class and 
+  }
 
 };
 
