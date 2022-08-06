@@ -5,7 +5,7 @@ import Hotel from '../src/classes/Hotel';
 
 import customersData from '../src/data/customer-sample-data';
 import bookingsData from '../src/data/bookings-sample-data';
-
+import roomsData from '../src/data/rooms-sample-data';
 
 describe('Customer', () => {
   let customer1;
@@ -15,7 +15,7 @@ describe('Customer', () => {
   beforeEach( () => {
     customer1 = new Customer(customersData[0]);
     customer3 = new Customer(customersData[2]);
-    hotel = new Hotel(bookingsData, customersData)
+    hotel = new Hotel(bookingsData, roomsData)
   });
 
   it('should be a function', () => {
@@ -134,9 +134,10 @@ describe('Customer', () => {
   });
   
   it('should be able to calculate the total amount customer has spent on bookings', () => {
-    customer1.calculateTotalAmountSpent();
+    customer1.filterBookings(hotel)
+    customer1.calculateTotalAmountSpent(hotel);
 
-    expect(customer1.totalAmountSpent).to.equal()
+    expect(customer1.totalAmountSpent).to.equal(1490.58)
   });
 });
 

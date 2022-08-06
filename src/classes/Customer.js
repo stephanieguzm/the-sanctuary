@@ -1,4 +1,4 @@
-// import Hotel from './Hotel'
+import Hotel from './Hotel'
 
 class Customer {
   constructor(customer) {
@@ -28,13 +28,22 @@ class Customer {
     })
   };
 
-  calculateTotalAmountSpent() {
-    //iterate over this.bookings to tap into the roomNumber property
-    //then go to the Room class and 
+  calculateTotalAmountSpent(hotel) {
+    let bookings = this.bookings;
+    // console.log('hotel', hotel)
+    this.totalAmountSpent = hotel.rooms.reduce((total, room) => {
+      bookings.forEach(booking => {          
+        if (room.number === booking.roomNumber) {
+          // console.log('rooms #', hotel.rooms)
+          // console.log('cost', room.costPerNight)
+
+          total += room.costPerNight
+        }
+      })
+      return total
+    }, 0);
+    return this.totalAmountSpent
   }
-
 };
-
-
 
 export default Customer;
