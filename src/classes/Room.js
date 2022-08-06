@@ -7,6 +7,8 @@ class Room {
     this.numBeds = room.numBeds;
     this.costPerNight = room.costPerNight;
   }
+
+  // method: assign room images
 }
 
 export default Room;

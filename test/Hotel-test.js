@@ -22,8 +22,9 @@ describe('Hotel', () => {
   });
 
   it('should store all bookings', () => {
+    expect(hotel).to.have.a.property('bookings');
     expect(hotel.bookings).to.be.an('array')
-    expect(hotel.bookings.length).to.equal(10);
+    expect(hotel.bookings.length).to.equal(11);
     expect(hotel.bookings).to.deep.equal([
       {
         id: "5fwrgu4i7k55hl6t8",
@@ -85,12 +86,19 @@ describe('Hotel', () => {
         date: "2022/02/15",
         roomNumber: 2
       },
+      {
+        id: "5fwrgu4i7k55hl7l5",
+        userID: 1,
+        date: "2022/02/20",
+        roomNumber: 3
+      }
     ])
   });
 
   it('should store all rooms', () => {
+    expect(hotel).to.have.a.property('rooms');
     expect(hotel.rooms).to.be.an('array')
-    expect(hotel.rooms.length).to.equal(15);
+    expect(hotel.rooms.length).to.equal(16);
     expect(hotel.rooms).to.deep.equal([
       {
         number: 10,
@@ -211,12 +219,21 @@ describe('Hotel', () => {
         bedSize: "queen",
         numBeds: 1,
         costPerNight: 374.67
-      }
+      },
+      {
+        number: 14,
+        roomType: "residential suite",
+        bidet: false,
+        bedSize: "twin",
+        numBeds: 1,
+        costPerNight: 457.88
+      },
     ])
   });
 
   it('should store all customers', () => {
-    expect(hotel.customers).to.be.an('array')
+    expect(hotel).to.have.a.property('customers');
+    expect(hotel.customers).to.be.an('array');
     expect(hotel.customers.length).to.equal(5);
     expect(hotel.customers).to.deep.equal([
       {
@@ -242,9 +259,28 @@ describe('Hotel', () => {
     ])
   });
 
-  it('should filter rooms by room type', () => {
-    let roomType = filterByRoomType();
-    expect(hotel.filterByRoomType()).to.be(roomType);
+  it('should find the current customer by customer ID', () => {
+    expect(hotel).to.have.a.property('currentCustomer');
+    
+    hotel.findCurrentCustomer(1);
+
+    expect(hotel.currentCustomer.id).to.equal(1);
+    expect(hotel.currentCustomer.name).to.equal('Leatha Ullrich');
+
   });
 
+  it('should find all room types', () => {
+    const roomTypes = hotel.findRoomTypes();
+
+    expect(roomTypes).to.be.an('array');
+    expect(roomTypes.length).to.equal(4); 
+    expect(roomTypes).to.deep.equal(['suite', 'single room', 'residential suite', 'junior suite']);
+  });
+
+  it('should find all available rooms by date', () => {
+    const requestedDate = '2023/01/13';
+
+    let currentAvailableRooms = hotel.findAvailableRooms(requestedDate);
+    expect(currentAvailableRooms).to.equal();
+  });
 })
