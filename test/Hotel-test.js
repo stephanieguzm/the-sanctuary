@@ -10,7 +10,7 @@ describe('Hotel', () => {
   let hotel;
 
   beforeEach(() => {
-    hotel = new Hotel(bookingsData, roomsData);
+    hotel = new Hotel(bookingsData, roomsData, customersData);
   });
 
   it('should be a function', () => {
@@ -22,6 +22,8 @@ describe('Hotel', () => {
   });
 
   it('should store all bookings', () => {
+    expect(hotel.bookings).to.be.an('array')
+    expect(hotel.bookings.length).to.equal(10);
     expect(hotel.bookings).to.deep.equal([
       {
         id: "5fwrgu4i7k55hl6t8",
@@ -86,7 +88,9 @@ describe('Hotel', () => {
     ])
   });
 
-  it('should store all room types', () => {
+  it('should store all rooms', () => {
+    expect(hotel.rooms).to.be.an('array')
+    expect(hotel.rooms.length).to.equal(15);
     expect(hotel.rooms).to.deep.equal([
       {
         number: 10,
@@ -209,5 +213,38 @@ describe('Hotel', () => {
         costPerNight: 374.67
       }
     ])
-  })
+  });
+
+  it('should store all customers', () => {
+    expect(hotel.customers).to.be.an('array')
+    expect(hotel.customers.length).to.equal(5);
+    expect(hotel.customers).to.deep.equal([
+      {
+        id: 1,
+        name: "Leatha Ullrich"
+      },
+      {
+        id: 2,
+        name: "Rocio Schuster"
+      },
+      {
+        id: 3,
+        name: "Kelvin Schiller"
+      },
+      {
+        id: 4,
+        name: "Kennedi Emard"
+      },
+      {
+        id: 5,
+        name: "Rhiannon Little"
+      }
+    ])
+  });
+
+  it('should filter rooms by room type', () => {
+    let roomType = filterByRoomType();
+    expect(hotel.filterByRoomType()).to.be(roomType);
+  });
+
 })
