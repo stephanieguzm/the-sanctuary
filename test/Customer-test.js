@@ -137,7 +137,7 @@ describe('Customer', () => {
     customer1.filterBookings(hotel)
     customer1.calculateTotalAmountSpent(hotel);
 
-    expect(customer1.totalAmountSpent).to.equal(1490.58)
+    expect(customer1.totalAmountSpent).to.equal(1535.58)
   });
 });
 

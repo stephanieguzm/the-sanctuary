@@ -30,13 +30,9 @@ class Customer {
 
   calculateTotalAmountSpent(hotel) {
     let bookings = this.bookings;
-    // console.log('hotel', hotel)
     this.totalAmountSpent = hotel.rooms.reduce((total, room) => {
       bookings.forEach(booking => {          
         if (room.number === booking.roomNumber) {
-          // console.log('rooms #', hotel.rooms)
-          // console.log('cost', room.costPerNight)
-
           total += room.costPerNight
         }
       })
