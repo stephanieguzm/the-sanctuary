@@ -2,11 +2,41 @@
   border: 1px solid red;
 }
 
+html {
+  width: 100%;
+  background-color: rgb(209, 168, 157);
+}
+
+body {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto Condensed', sans-serif;
+  /* background-image: url('./images/courtyard.png'); */
+  /* background-size: cover; */
+  /* background-repeat: no-repeat; */
+  /* overscroll-behavior-y: none;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  display: flex;
+  flex-direction: column;
+  position: relative; */
+}
+
+h1 {
+  width: 100%;
+  /* margin: 0;
+  padding: 0; */
+}
+
 nav {
+  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-content: flex-start;
+  background-color: #d1a89d;
+  background-color: rgb(209, 168, 157);
 }
 
 .user-dashboard-section,
@@ -30,6 +60,26 @@ nav {
   display: flex;
 }
 
+.logo {
+  width: 40%;
+  height: auto;
+}
+
+.navigation-bar {
+  padding: .5em;
+
+}
+
+button {
+  border-color: black;
+  box-shadow: 3px 3px 2px #808080a1;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 1em;
+  margin-top: 30px;
+  margin-right: 8px;
+  padding: 15px;
+  transition-duration: .3s;
+}
 /* body {
   background: 
 } */
