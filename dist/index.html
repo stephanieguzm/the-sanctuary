@@ -4,14 +4,17 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap" rel="stylesheet">
   <link href="styles.css">
   <title>The Sanctuary</title>
 </head>
 <body>
   <main>
     <nav role="navigation" class="nav-bar-header">
-      <div role="heading">
-        <h1 class="the-sanctuary-header">The Sanctuary + Wellness Center</h1>
+      <div role="navigation-bar" class="navigation-bar">
+        <img class="logo" src="./images/logo.png" alt="The Sanctuary logo">
       </div>
       <div class="nav-bar-buttons">
         <button type="button" class="view-dashboard-button" id="dashboardButton">Your Reservations</button>
@@ -51,10 +54,13 @@
     <section class="available-rooms-section hidden" id="availableRoomsSection">
     </section>
   </main>
-  <!-- <img src="./images/turing-logo.png" alt="turing logo"> -->
-  
-  <!-- Do not include the scripts.js or class files here - it is done by the webpack server -->
   <script src="bundle.js"></script>
+  <img src="./images/courtyard.png" alt="Overlook of the hotel courtyard">
+  <img src="./images/residential-suite.png" alt="Residential suite room with bed, living area, and dining area">
+  <img src="./images/suite.png" alt="Suite room with bed and living area">
+  <img src="./images/junior-suite.png" alt="Junior Suite room with bed and desk">
+  <img src="./images/single.png" alt="Junior Suite room with bed">
+  <!-- Do not include the scripts.js or class files here - it is done by the webpack server -->
 
 </body>
 </html>
