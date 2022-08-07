@@ -1,3 +1,50 @@
-body {
-  background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
+* {
+  border: 1px solid red;
 }
+
+nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-content: flex-start;
+}
+
+.user-dashboard-section,
+.booking-status-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  align-content: center;
+}
+
+.show-rooms-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  align-content: flex-start;
+}
+
+.user-booking-section {
+  display: flex;
+}
+
+/* body {
+  background: 
+} */
+
+/* nav { */
+  /* color: green#123524, white #FEFDFA pink#EDCADB
+/* } */
+
+/* light blue #52b3c2
+purple #8f4c6f
+ac335e
+
+*/
+
+
+/* fonts  */
+/* futura */
+ /* freight-big-pro */
