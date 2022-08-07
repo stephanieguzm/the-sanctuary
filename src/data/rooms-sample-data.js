@@ -118,7 +118,15 @@ const roomsData = [
     bedSize: "queen",
     numBeds: 1,
     costPerNight: 374.67
-  }
+  },
+  {
+    number: 14,
+    roomType: "residential suite",
+    bidet: false,
+    bedSize: "twin",
+    numBeds: 1,
+    costPerNight: 457.88
+  },
 ]
 
 export default roomsData;

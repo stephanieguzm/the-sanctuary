@@ -41,7 +41,7 @@ describe('Customer', () => {
     customer1.filterBookings(hotel);
 
     expect(customer1.bookings).to.be.an('array')
-    expect(customer1.bookings.length).to.equal(5);
+    expect(customer1.bookings.length).to.equal(6);
     expect(customer1.bookings).to.deep.equal([
       {
         id: "5fwrgu4i7k55hl6t8",
@@ -72,6 +72,12 @@ describe('Customer', () => {
         userID: 1,
         date: "2022/01/19",
         roomNumber: 19
+      },
+      {
+        id: "5fwrgu4i7k55hl7l5",
+        userID: 1,
+        date: "2022/02/20",
+        roomNumber: 3
       }
     ]);
   });
@@ -94,6 +100,12 @@ describe('Customer', () => {
         userID: 1,
         date: "2022/01/19",
         roomNumber: 19
+      },
+      {
+        id: "5fwrgu4i7k55hl7l5",
+        userID: 1,
+        date: "2022/02/20",
+        roomNumber: 3
       }
     ]);
   });
@@ -137,7 +149,7 @@ describe('Customer', () => {
     customer1.filterBookings(hotel)
     customer1.calculateTotalAmountSpent(hotel);
 
-    expect(customer1.totalAmountSpent).to.equal(1490.58)
+    expect(customer1.totalAmountSpent).to.equal(2026.72)
   });
 });
 
