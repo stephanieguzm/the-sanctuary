@@ -38,7 +38,7 @@ const bookingsData = [
   {
     id: "5fwrgu4i7k55hl76o",
     userID: 3,
-    date: "2023/02/20",
+    date: "2023/01/13",
     roomNumber: 14
   },
   {
