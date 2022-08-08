@@ -46,6 +46,7 @@ let currentCustomer;
 let currentDate;
 let availableRooms;
 let selectedRoomType;
+let availableRoomsByType;
 
 function checkDate(event) {
   checkInDate = event.target.value.split('-').join('/');
@@ -131,7 +132,6 @@ function returnTotalSpent() {
 };
 
 function generatePastBookingCard() {
-  console.log('past bookings', pastBookingsContainer)
   pastBookingsContainer.innerHTML = ``;
 
   const pastBookings = currentCustomer.pastBookings;
@@ -177,7 +177,7 @@ function loadAvailableRooms(checkInDate) {
   checkInAvailabilityContainer.innerHTML = ``;
   
   availableRooms.forEach(room => {
-  let roomImage = getRoomImage(room);
+  // let roomImage = getRoomImage(room);
 
   checkInAvailabilityContainer.innerHTML +=
     `<div role="listitem" class="available-room-card" id="${room.number}">
@@ -191,7 +191,23 @@ function loadAvailableRooms(checkInDate) {
     // < img src = "${roomImage}" class="available-room" alt = "Room Number${room.number}" > 
 };
 
-function loadAvailableRoomsByType() {
+function loadAvailableRoomsByType(selectedRoomType) {
+  console.log('inside availableroomsbytype', availableRooms)
+  availableRoomsByType = hotel.findAvailableRoomsByType(selectedRoomType);
 
+  checkInAvailabilityContainer.innerHTML = ``;
+
+  availableRoomsByType.forEach(room => {
+    // let roomImage = getRoomImage(room);
+
+    checkInAvailabilityContainer.innerHTML +=
+      `<div role="listitem" class="available-room-card" id="${room.number}">
+   
+    <p class="booking-card-message">${room.roomType}</p>
+    <p class="booking-card-message">$${room.costPerNight} per night</p>
+    <p class="booking-card-message">Beds: ${room.numBeds}</p>
+    <p class="booking-card-message">Bed Size: ${room.bedSize}</p>
+  </div>`;
+  })
 };
 
