@@ -9,18 +9,6 @@ class Room {
     this.image;
   }
 }
-//   getRoomImage() {
-//     if (this.roomType === 'residential suite') {
-//       this.image = ".images/residential-suite.png";
-//     } else if (this.roomType === 'suite') {
-//       this.image = ".images/suite.png";
-//     } else if (this.roomType === 'junior suite') {
-//       this.image = ".images/junior-suite.png";
-//     } else {
-//       this.image = ".images/single.png";
-//     }
-//   }
-// }
 
 export default Room;
 

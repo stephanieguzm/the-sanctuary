@@ -42,7 +42,6 @@ class Hotel {
         availableRoomsByType.push(room)
       }
     })
-    console.log(availableRoomsByType)
     return availableRoomsByType
   }
 
