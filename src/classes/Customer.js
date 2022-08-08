@@ -7,7 +7,6 @@ class Customer {
     this.bookings = [];
     this.pastBookings = [];
     this.upcomingBookings = [];
-    this.currentBookings = [];
     this.totalAmountSpent = 0;
   };
 
@@ -20,9 +19,7 @@ class Customer {
     this.bookings.forEach( booking => {
       if (booking.date < todaysDate) {
         this.pastBookings.push(booking)
-      } else if (booking.date === todaysDate) {
-        this.currentBookings.push(booking)
-      } else if (booking.date > todaysDate) {
+      } else if (booking.date >= todaysDate) {
         this.upcomingBookings.push(booking)
       }
     })

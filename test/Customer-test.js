@@ -136,15 +136,7 @@ describe('Customer', () => {
       }
     ]);
   });
-  
-  it('should be able to store current bookings for customer', () => {
-    const todaysDate = '2022/08/04';
 
-    customer1.filterBookings(hotel);
-    customer1.filterBookingsByDate(todaysDate);
-    expect(customer1.currentBookings).to.deep.equal([]);
-  });
-  
   it('should be able to calculate the total amount customer has spent on bookings', () => {
     customer1.filterBookings(hotel)
     customer1.calculateTotalAmountSpent(hotel);
