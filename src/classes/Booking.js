@@ -1,3 +1,5 @@
+import Room from './Room';
+
 class Booking {
   constructor(booking) {
     this.id = booking.id;
@@ -6,6 +8,5 @@ class Booking {
     this.roomNumber = booking.roomNumber;
   }
 };
-
 
 export default Booking;
