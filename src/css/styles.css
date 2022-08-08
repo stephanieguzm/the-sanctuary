@@ -11,7 +11,7 @@ body {
   width: 100%;
   margin: 0;
   padding: 0;
-  font-family: 'Roboto Condensed', sans-serif;
+  /* font-family: 'Roboto Condensed', sans-serif; */
   /* background-image: url('./images/courtyard.png'); */
   /* background-size: cover; */
   /* background-repeat: no-repeat; */
@@ -29,6 +29,10 @@ h1 {
   padding: 0; */
 }
 
+h3 {
+  text-align: center;
+}
+
 nav {
   width: 100%;
   display: flex;
@@ -40,7 +44,8 @@ nav {
 }
 
 .user-dashboard-section,
-.booking-status-container {
+.booking-status-container
+.past-bookings {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -80,9 +85,52 @@ button {
   padding: 15px;
   transition-duration: .3s;
 }
+
+.upcoming-bookings,
+.past-bookings,
+.check-in-availability-section {
+  display: flex;
+  flex-direction: row;
+  flex-flow: wrap;
+  justify-content: space-evenly;
+}
+
+.individual-booking-card,
+.available-room-card {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  background-color: #ffffffd9;
+  margin: 1%;
+  border-radius: 2%;
+  box-shadow: 5px 5px 7px grey;
+  overflow: hidden;
+  width: 20%;
+  height: auto;
+}
+
+.booking-card,
+.available-room {
+  display: flex;
+  justify-content: center;
+  flex-flow: wrap;
+  align-items: flex-start;
+  align-content: flex-start;
+  width: 100%;
+}
+
+.booking-card-message {
+  margin: 0;
+}
+
+.hidden {
+  display: none !important;
+}
+
 /* body {
   background: 
-} */
+}
 
 /* nav { */
   /* color: green#123524, white #FEFDFA pink#EDCADB
