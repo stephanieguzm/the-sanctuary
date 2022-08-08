@@ -6,12 +6,11 @@ class Hotel {
     this.currentCustomer = {};
     this.availableRooms = [];
   }
-  //method: find current customer - retrieve customerData 
+
   findCurrentCustomer(customerID) {
     this.currentCustomer = this.customers.find(customer => customer.id === customerID);
   }
 
-  // method: retrieve all room types
   findRoomTypes() {
     const roomTypes = [];
     const getRoomTypes = this.rooms.forEach((room) => {
@@ -21,9 +20,9 @@ class Hotel {
     })
     return roomTypes
   }
-  //filter rooms by date
+
   findAvailableRooms(requestedDate) {
-    const unavailableRooms = this.bookings.reduce( (total, booking) => {
+    let unavailableRooms = this.bookings.reduce( (total, booking) => {
       if (booking.date === requestedDate) {
         total.push(booking.roomNumber)
       }
@@ -36,7 +35,6 @@ class Hotel {
     return this.availableRooms
   }
 
-  // method: retrieve all available rooms by room type
   findAvailableRoomTypes() {
     const availableRoomTypes = [];
     const getRoomTypes = this.availableRooms.forEach((room) => {
@@ -48,7 +46,6 @@ class Hotel {
   }
 
 // method: add new booking for customer
-
 
 }
 
