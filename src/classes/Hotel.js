@@ -35,18 +35,18 @@ class Hotel {
     return this.availableRooms
   }
 
-  findAvailableRoomTypes() {
-    const availableRoomTypes = [];
+  findAvailableRoomsByType(selectedRoomType) {
+    const availableRoomsByType = [];
     const getRoomTypes = this.availableRooms.forEach((room) => {
-      if (!availableRoomTypes.includes(room.roomType)) {
-        availableRoomTypes.push(room.roomType)
+      if (room.roomType === selectedRoomType) {
+        availableRoomsByType.push(room)
       }
     })
-    return availableRoomTypes
+    return availableRoomsByType
   }
 
 // method: add new booking for customer
 
-}
+};
 
 export default Hotel;

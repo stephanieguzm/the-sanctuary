@@ -401,12 +401,29 @@ describe('Hotel', () => {
     ]);
   });
 
-  it('should find all available room types', () => {
-    hotel.findAvailableRooms();
-    let availableRoomTypes = hotel.findAvailableRoomTypes();
+  it('should find all available rooms by room type', () => {
+    hotel.findAvailableRooms('2023/01/13');
+    let availableRoomsByType = hotel.findAvailableRoomsByType('suite');
 
-    expect(availableRoomTypes).to.be.an('array');
-    expect(availableRoomTypes.length).to.equal(4);
-    expect(availableRoomTypes).to.deep.equal(['suite', 'single room', 'residential suite', 'junior suite']);
+    expect(availableRoomsByType).to.be.an('array');
+    expect(availableRoomsByType.length).to.equal(2);
+    expect(availableRoomsByType).to.deep.equal([
+      {
+        number: 10,
+        roomType: "suite",
+        bidet: false,
+        bedSize: "twin",
+        numBeds: 1,
+        costPerNight: 497.64
+      },
+      {
+        number: 2,
+        roomType: "suite",
+        bidet: false,
+        bedSize: "full",
+        numBeds: 2,
+        costPerNight: 477.38
+      },
+    ]);
   });
 })
