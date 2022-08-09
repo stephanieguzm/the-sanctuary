@@ -34,9 +34,10 @@ const upcomingBookingsSection = document.querySelector('.upcoming-bookings-secti
 const upcomingBookingsContainer = document.querySelector('.upcoming-bookings');
 const userDashboard = document.querySelector('.user-dashboard-section');
 const loginSection = document.querySelector('.login-section');
-const loginForm = document.querySelector(".login-form");
-const username = document.querySelector('input[name="userName"]');
-const userPassword = document.querySelector('input[name="userPassword"]');
+const loginForm = document.getElementById("loginForm");
+const loginError = document.querySelector('.error-message');
+// const usernameValue = document.querySelector('[name="userName"]').value;
+// const passwordValue = document.querySelector('[name="userPassword"]').value;
 
 let checkInDate;
 let bookingsData;
@@ -45,15 +46,16 @@ let customersData;
 let hotel;
 let room;
 let currentCustomer;
-let currentCustomerID;
 let currentDate;
 let availableRooms;
 let selectedRoomType;
 let availableRoomsByType;
 let selectedRoom;
 let newBooking;
-let nameVal;
-let passwordVal;
+let currentCustomerID;
+let usernameInput = document.querySelector('[name="userName"]');
+let passwordInput = document.querySelector('[name="userPassword"]');
+// const password = 'overlook2021';
 
 checkInAvailabilityContainer.addEventListener('click', handleEvent);
 checkInAvailabilityContainer.addEventListener('keyup', handleEvent);
@@ -66,7 +68,35 @@ roomSelection.addEventListener('change', (event) => {
 });
 
 /* ------ Login ------ */
+window.onload = pageLoad();
 
+function pageLoad() {
+  loginForm.addEventListener('submit', function (event) {
+    event.preventDefault();
+    validateCredentials();
+  })
+}
+
+function customerLogin() {
+
+}
+
+function validateCredentials() {
+  const customerIDString = usernameInput.value.substring(8);
+
+  if (usernameInput.value === `customer${customerIDString}` && passwordInput.value === 'overlook2021') {
+    currentCustomerID = parseInt(customerIDString)
+    loginError.innerText = '';
+    customerLogin();
+    console.log('success!')
+    return currentCustomerID
+
+  } else {
+    loginError.innerText = `We encountered an error logging you into this application. Please try again.`
+    usernameInput.value = '';
+    passwordInput.value = '';
+  }
+};
 
 /* ------ Event Handlers ------ */
 function handleEvent(event) {
@@ -100,7 +130,7 @@ function reserveRoom(event) {
 };
 
 /* ------ Fetch Requests ------ */
-function fetchData() {
+function fetchAllData() {
   Promise.all([
       getData(`http://localhost:3001/api/v1/bookings`),
       getData(`http://localhost:3001/api/v1/rooms`),
