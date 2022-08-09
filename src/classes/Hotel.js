@@ -45,8 +45,6 @@ class Hotel {
     return availableRoomsByType
   }
 
-// method: add new booking for customer
-
 };
 
 export default Hotel;

@@ -1,25 +1,32 @@
 var getData = (url) => {
   return fetch(url)
-    .then(checkStatus)
-    .then(response => response.json())
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`Error Status ${response.status}: ${response.status.text}`);
+      } else {
+        return response.json();
+      }
+    })
     .catch(error => generateErrorMessage(error))
-}
-
-var checkStatus = (response) => {
-  if (response.ok) {
-    return Promise.resolve(response);
-  } else {
-    return Promise.reject(new Error(generateErrorMessage(response)));
-  }
-}
+};
 
 var generateErrorMessage = (response) => {
-  console.log('Error: ', response)
-  // errorMessageContent.innerHTML = '';
+  hideElement(bookingConfirmation);
+  hideElement(pastBookingsSection);
+  hideElement(upcomingBookingsSection);
+  hideElement(checkInSection)
+  hideElement(bookingsMessage);
+  hideElement(bookingStatusContainer);
+  showElement(reservationsButton);
 
-  // errorMessageContent.innerHTML +=
-  //   `<h2 class="modal-title" id="error-message-modal">${response.statusText}: Oops! Looks like there was an error!</h2>`;
-  // MicroModal.show("modal-3")
-}
+  checkInDateInput.value = '';
+  roomSelection.value = '';
+  
+  errorMessageSection.innerHTML = '';
+  errorMessageSection.innerHTML +=
+    `<h2 class="message-header" id="errorMessage">Error ${response.status}: ${response.status.text}: Oops! Looks like there was an error!</h2>
+    <p class="message-body">Please return to the Reservations page.<p>`;
+};
 
-export { getData, checkStatus, generateErrorMessage };
+
+export { getData, generateErrorMessage };
