@@ -28,22 +28,8 @@ const upcomingBookingsContainer = document.querySelector('.upcoming-bookings');
 const bookingStatusContainer = document.querySelector('.booking-status-container');
 const checkInAvailabilityContainer = document.querySelector('.check-in-availability-section');
 const roomSelection = document.querySelector('#room-selection');
-const availableRoomCard = document.querySelector(".available-room-card")
-
-reservationsButton.addEventListener('click', showDashboardView);
-checkInDateInput.addEventListener('change', (event) => {
-  checkDate(event)
-});
-roomSelection.addEventListener('change', (event) => {
-  checkRoomSelection(event)
-});
-checkInAvailabilityContainer.addEventListener('click', (event) => {
-  console.log(event.target)
-  if (event.target.classList.contains('reserve-room-button')) {
-    reserveRoom(event)
-  }
-    
-});
+const availableRoomCard = document.querySelector(".available-room-card");
+const showBookingConfirmation = document.querySelector('.booking-confirmation-message');
 
 let checkInDate;
 let bookingsData;
@@ -58,6 +44,25 @@ let selectedRoomType;
 let availableRoomsByType;
 let selectedRoom;
 let newBooking;
+
+checkInAvailabilityContainer.addEventListener('click', handleEvent);
+checkInAvailabilityContainer.addEventListener('keyup', handleEvent);
+reservationsButton.addEventListener('click', showDashboardView);
+checkInDateInput.addEventListener('change', (event) => {
+  checkDate(event)
+});
+roomSelection.addEventListener('change', (event) => {
+  checkRoomSelection(event)
+});
+
+function handleEvent(event) {
+  if (event.type === 'click' || 
+    event.keyCode === 13) {
+    if (event.target.classList.contains('reserve-room-button')) {
+      reserveRoom(event)
+    }
+  }
+};
 
 function checkDate(event) {
   checkInDate = event.target.value.split('-').join('/');
@@ -81,7 +86,6 @@ function reserveRoom(event) {
   resetBookingsView();
   console.log('within post: ', currentCustomer.currentBookings)
 }; 
-
 
 /* ------ Fetch Requests ------ */
 Promise.all([
@@ -173,18 +177,20 @@ function resetBookingsView() {
   hideElement(bookingsMessage);
   hideElement(bookingStatusContainer);
   showElement(reservationsButton);
+  showElement(showBookingConfirmation);
+  
   checkInDateInput.value = '';
 };
 
-/* ------ Main Functions ------ */
+/* ------ Interpolation ------ */
 function returnTotalSpent() {
   const amountSpent = currentCustomer.calculateTotalAmountSpent(hotel);
   bookingsMessage.innerHTML = ``;
 
   bookingsMessage.innerHTML +=
     `<div role="log" class="all-bookings-details" id="${currentCustomer.id}">
-    <h3 class="message-header">Thank you for being a guest at The Sanctuary</h3>
-    <p class="message-body">You have spent $${amountSpent.toFixed(2)} on bookings.</p>
+    <h2 class="message-header" tabindex="0">Thank you for being a guest at The Sanctuary</h2>
+    <p class="message-body" tabindex="0">You have spent $${amountSpent.toFixed(2)} on bookings.</p>
   </div>`;
 };
 
@@ -196,8 +202,8 @@ function generatePastBookingCard() {
     pastBookingsContainer.innerHTML +=
       `<div role="listitem" class="individual-booking-card">
         <img src="./images/suite.png" class="booking-card" alt="${booking.date} booking">
-        <p class="booking-card-message">Date: ${booking.date}</p>
-        <p class="booking-card-message">Booking ID: ${booking.id}</p>
+        <p class="booking-card-message" tabindex="0">Date: ${booking.date}</p>
+        <p class="booking-card-message" tabindex="0">Booking ID: ${booking.id}</p>
       </div>`
   });
 };
@@ -209,8 +215,8 @@ function generateUpcomingBookingCard() {
     upcomingBookingsContainer.innerHTML +=
       `<div role="listitem" class="individual-booking-card" id="${booking.id}">
       <img src="./images/suite.png" class="booking-card" alt="${booking.date} booking">
-      <p class="booking-card-message">Date: ${booking.date}</p>
-      <p class="booking-card-message">Booking ID: ${booking.id}</p>
+      <p class="booking-card-message" tabindex="0">Date: ${booking.date}</p>
+      <p class="booking-card-message" tabindex="0">Booking ID: ${booking.id}</p>
     </div>`;
   });
 };
@@ -236,11 +242,11 @@ function loadAvailableRooms(checkInDate) {
   // let roomImage = getRoomImage(room);
   checkInAvailabilityContainer.innerHTML +=
     `<div role="listitem" class="available-room-card" id="${room.number}">
-      <p class="booking-card-message">${room.roomType}</p>
-      <p class="booking-card-message">$${room.costPerNight} per night</p>
-      <p class="booking-card-message">Beds: ${room.numBeds}</p>
-      <p class="booking-card-message">Bed Size: ${room.bedSize}</p>
-      <button type="button" class="reserve-room-button" id="${room.number}">Reserve Room</button>
+      <p class="booking-card-message" tabindex="0">${room.roomType}</p>
+      <p class="booking-card-message" tabindex="0">$${room.costPerNight} per night</p>
+      <p class="booking-card-message" tabindex="0">Beds: ${room.numBeds}</p>
+      <p class="booking-card-message" tabindex="0">Bed Size: ${room.bedSize}</p>
+      <button type="button" class="reserve-room-button" id="${room.number}" tabindex="0">Reserve Room</button>
     </div>`;
   })
     // < img src = "${roomImage}" class="available-room" alt = "Room Number${room.number}" > 
@@ -255,11 +261,11 @@ function loadAvailableRoomsByType(selectedRoomType) {
     // let roomImage = getRoomImage(room);
     checkInAvailabilityContainer.innerHTML +=
       `<div role="listitem" class="available-room-card" id="${room.number}">
-        <p class="booking-card-message">${room.roomType}</p>
-        <p class="booking-card-message">$${room.costPerNight} per night</p>
-        <p class="booking-card-message">Beds: ${room.numBeds}</p>
-        <p class="booking-card-message">Bed Size: ${room.bedSize}</p>
-        <button type="button" class="reserve-room-button" id="${room.number}">Reserve Room</button>
+        <p class="booking-card-message" tabindex="0">${room.roomType}</p>
+        <p class="booking-card-message" tabindex="0">$${room.costPerNight} per night</p>
+        <p class="booking-card-message" tabindex="0">Beds: ${room.numBeds}</p>
+        <p class="booking-card-message" tabindex="0">Bed Size: ${room.bedSize}</p>
+        <button type="button" class="reserve-room-button" id="${room.number}" tabindex="0">Reserve Room</button>
       </div>`;
   })
   // < img src = "${roomImage}" class="available-room" alt = "Room Number${room.number}" > 
