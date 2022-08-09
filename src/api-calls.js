@@ -1,24 +1,12 @@
 var getData = (url) => {
   return fetch(url)
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(`Error Status ${response.status}: ${response.status.text}`);
-      } else {
-        return response.json();
-      }
-    })
+    .then(response => checkResponseStatus(response))
     .catch(error => generateErrorMessage(error))
 };
 
 var getCurrentCustomer = (id) => {
   return fetch(`http://localhost:3001/api/v1/customers/${id}`)
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(`Error Status ${response.status}: ${response.status.text}`);
-      } else {
-        return response.json();
-      }
-    })
+    .then(response => checkResponseStatus(response))
     .catch(error => generateErrorMessage(error))
 };
 
@@ -40,5 +28,13 @@ var generateErrorMessage = (response) => {
     <p class="message-body">Please return to the Reservations page.<p>`;
 };
 
+var checkResponseStatus = (response) => {
+  if (!response.ok) {
+    throw new Error(`Error Status ${response.status}: ${response.status.text}`)
+  } else {
+    return response.json()
+  }
+}
 
-export { getData, getCurrentCustomer, generateErrorMessage };
+
+export { getData, getCurrentCustomer, checkResponseStatus, generateErrorMessage };
