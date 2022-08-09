@@ -9,29 +9,28 @@ import './images/suite.png'
 import './images/junior-suite.png'
 import './images/single.png'
 
-import { getData, generateErrorMessage } from './api-calls';
+import { getData, checkStatus, generateErrorMessage } from './api-calls';
+import Booking from '../src/classes/Booking';
 import Hotel from '../src/classes/Hotel';
 import Customer from '../src/classes/Customer';
 import Room from '../src/classes/Room';
 
-const availableRoomCard = document.querySelector(".available-room-card");
-const bookingConfirmation = document.querySelector('.booking-confirmation-message');
-const bookingsDetails = document.querySelector('.all-bookings-details');
-const bookingsMessage = document.querySelector('.all-bookings');
-const bookingStatusContainer = document.querySelector('.booking-status-container');
-const checkInDateInput = document.querySelector('#checkInDate');
-const checkInSection = document.querySelector('.check-in-date-section');
-const checkInAvailabilityContainer = document.querySelector('.check-in-availability-section');
-const errorMessageSection = document.querySelector('.error-message-section');
-const pastBookingsSection = document.querySelector('.past-bookings-section');
-const pastBookingsContainer = document.querySelector('.past-bookings');
+const userDashboard = document.querySelector('.user-dashboard-section');
 const reservationsButton = document.querySelector('.view-dashboard-button');
 const reserveRoomButton = document.querySelector('.reserve-room-button');
-const roomSelection = document.querySelector('#room-selection');
-const roomAvailabilityMessage = document.querySelector('.room-availability')
+const checkInDateInput = document.querySelector('#checkInDate');
+const bookingsMessage = document.querySelector('.all-bookings');
+const checkInSection = document.querySelector('.check-in-date-section')
+const bookingsDetails = document.querySelector('.all-bookings-details')
 const upcomingBookingsSection = document.querySelector('.upcoming-bookings-section');
+const pastBookingsSection = document.querySelector('.past-bookings-section');
+const pastBookingsContainer = document.querySelector('.past-bookings');
 const upcomingBookingsContainer = document.querySelector('.upcoming-bookings');
-const userDashboard = document.querySelector('.user-dashboard-section');
+const bookingStatusContainer = document.querySelector('.booking-status-container');
+const checkInAvailabilityContainer = document.querySelector('.check-in-availability-section');
+const roomSelection = document.querySelector('#room-selection');
+const availableRoomCard = document.querySelector(".available-room-card");
+const bookingConfirmation = document.querySelector('.booking-confirmation-message');
 
 let checkInDate;
 let bookingsData;
@@ -45,6 +44,7 @@ let availableRooms;
 let selectedRoomType;
 let availableRoomsByType;
 let selectedRoom;
+let newBooking;
 
 checkInAvailabilityContainer.addEventListener('click', handleEvent);
 checkInAvailabilityContainer.addEventListener('keyup', handleEvent);
@@ -119,24 +119,15 @@ function addNewBooking(id, date, roomNum) {
       'Content-Type': 'application/json'
     }
   })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(`Error Status ${response.status}: ${response.status.text}`);
-      } else {
-        return response.json();
-      }
-    })
+    .then(checkStatus)
+    .then(response => response.json())
     .then(data => data)
     .then(() => fetch(`http://localhost:3001/api/v1/bookings`))
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(`Error Status ${response.status}: ${response.status.text}`);
-      } else {
-        return response.json();
-      }
-    })
+    .then(response => response.json())
     .then(data => {
+      // console.log('data: ', data)
       hotel.bookings = data.bookings;
+      // console.log('hotel.bookings: ', hotel.bookings)
     })
     .then(() => {
       loadCustomer() 
@@ -158,6 +149,7 @@ function loadCustomer() {
   currentCustomer.filterBookings(hotel);
   currentCustomer.filterBookingsByDate(currentDate);
   returnTotalSpent();
+  // console.log('all bookings', currentCustomer.bookings);
 };
 
 function generateCustomerBookings() {
@@ -205,7 +197,6 @@ function returnTotalSpent() {
 
   bookingsMessage.innerHTML += `
     <div role="log" class="all-bookings-details" id="${currentCustomer.id}">
-      <h1>Reset, Revive, and Raise Your Vibe</h1>
       <h2 class="message-header" tabindex="0">Thank you for being a guest at The Sanctuary</h2>
       <p class="message-body" tabindex="0">You have spent $${amountSpent.toFixed(2)} on bookings.</p>
     </div>`;
@@ -252,63 +243,38 @@ function getRoomImage(room) {
 
 function loadAvailableRooms(checkInDate) {
   availableRooms = hotel.findAvailableRooms(checkInDate);
+  // console.log('available rooms', availableRooms)
 
-  if (!availableRooms.length) {
-    roomAvailabilityMessage.innerHTML = ``;
-    roomAvailabilityMessage.innerHTML = `
-    <h2 class="message-header" tabindex="0">We're very sorry! No rooms are available on your selected date.</h2>`
-    roomSelection.value = '';
-  } else {
-    checkInAvailabilityContainer.innerHTML = ``;
-
-    roomAvailabilityMessage.innerHTML = ``;
-    roomAvailabilityMessage.innerHTML = `
-        <h2 class="message-header" tabindex="0">${availableRooms.length} rooms available for your selected date</h2>`
-
-    availableRooms.forEach(room => {
-      // let roomImage = getRoomImage(room);
-      checkInAvailabilityContainer.innerHTML += `
-      <div role="listitem" class="available-room-card" id="${room.number}">
+  checkInAvailabilityContainer.innerHTML = ``;
+  availableRooms.forEach(room => {
+  // let roomImage = getRoomImage(room);
+  checkInAvailabilityContainer.innerHTML += `
+    <div role="listitem" class="available-room-card" id="${room.number}">
       <p class="booking-card-message" tabindex="0">${room.roomType}</p>
       <p class="booking-card-message" tabindex="0">Cost per Night: $${room.costPerNight}</p>
       <p class="booking-card-message" tabindex="0">Beds: ${room.numBeds}</p>
       <p class="booking-card-message" tabindex="0">Bed Size: ${room.bedSize}</p>
-      <p class="booking-card-message" tabindex="0">Bidet in Room: ${room.bidet}</p>
       <button type="button" class="reserve-room-button" id="${room.number}" tabindex="0">Reserve Room</button>
-      </div>`;
-    })
-  }
+    </div>`;
+  })
     // < img src = "${roomImage}" class="available-room" alt = "Room Number${room.number}" > 
 };
 
 function loadAvailableRoomsByType(selectedRoomType) {
   availableRoomsByType = hotel.findAvailableRoomsByType(selectedRoomType);
+
   checkInAvailabilityContainer.innerHTML = ``;
-
-  if (!availableRoomsByType.length) {
-    roomAvailabilityMessage.innerHTML = ``;
-    roomAvailabilityMessage.innerHTML = `
-    <h2 class="message-header" tabindex="0">We're very sorry! No rooms are available on your selected date.</h2>`
-    roomSelection.value = '';
-  } else {
-    availableRoomsByType.forEach(room => {
-
-      roomAvailabilityMessage.innerHTML = ``;
-      roomAvailabilityMessage.innerHTML = `
-        <h2 class="message-header" tabindex="0">${availableRoomsByType.length} ${room.roomType}s available for your selected date</h2>`
-      roomSelection.value = '';
-      
-      checkInAvailabilityContainer.innerHTML += `
-        <div role="listitem" class="available-room-card" id="${room.number}">
-          <p class="booking-card-message" tabindex="0">${room.roomType}</p>
-          <p class="booking-card-message" tabindex="0">Cost per Night: $${room.costPerNight}</p>
-          <p class="booking-card-message" tabindex="0">Beds: ${room.numBeds}</p>
-          <p class="booking-card-message" tabindex="0">Bed Size: ${room.bedSize}</p>
-          <p class="booking-card-message" tabindex="0">Bidet in Room: ${room.bidet}</p>
-          <button type="button" class="reserve-room-button" id="${room.number}" tabindex="0">Reserve Room</button>
-        </div>`;
-    })
-  }
+  availableRoomsByType.forEach(room => {
+    // let roomImage = getRoomImage(room);
+    checkInAvailabilityContainer.innerHTML += `
+      <div role="listitem" class="available-room-card" id="${room.number}">
+        <p class="booking-card-message" tabindex="0">Room Type: ${room.roomType}</p>
+        <p class="booking-card-message" tabindex="0">Cost per Night: $${room.costPerNight}</p>
+        <p class="booking-card-message" tabindex="0">Beds: ${room.numBeds}</p>
+        <p class="booking-card-message" tabindex="0">Bed Size: ${room.bedSize}</p>
+        <button type="button" class="reserve-room-button" id="${room.number}" tabindex="0">Reserve Room</button>
+      </div>`;
+  })
   // < img src = "${roomImage}" class="available-room" alt = "Room Number${room.number}" > 
 };
 
