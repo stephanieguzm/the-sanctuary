@@ -16,6 +16,8 @@ class Customer {
   };
 
   filterBookingsByDate(todaysDate) {
+    this.pastBookings = [];
+    this.upcomingBookings = [];
     this.bookings.forEach( booking => {
       if (booking.date < todaysDate) {
         this.pastBookings.push(booking)
