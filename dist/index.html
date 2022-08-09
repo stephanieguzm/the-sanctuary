@@ -28,13 +28,17 @@
           <p class="message-body"tabindex="0">You have spent $10,000 on bookings.</p>
         </div>
       </section>
-      <section class="booking-section">
+      <section class="check-in-date-section">
         <h2 tabindex="0">Book Your Next Escape</h2>
         <p class="message-body" tabindex="0">Please select a month, day, and year to see available rooms.</p>
         <form id="check-in-date-box" aria-label="Select a check-in date"></form>
           <label for="checkInDate" tabindex="0">Check-in date: </label>
           <input type="date" class="check-in-date" id="checkInDate" min="2022-08-10" max="2025-12-31" name="check-in-date" required>
         </form>
+      </section>
+      <section class="booking-confirmation-message hidden" id="bookingConfirmation">
+        <h2 class="message-header" tabindex="0">Your room has been reserved!</h3>
+        <p class="message-body" tabindex="0">We look forward to seeing you soon.</p>
       </section>
       <section class="upcoming-bookings-section" tabindex="0">
         <h2 class="message-header" tabindex="0">Upcoming Bookings</h2>
@@ -69,10 +73,6 @@
             </div>
           </div>
         </section>
-      </section>
-      <section class="booking-confirmation-message hidden" id="bookingConfirmation">
-        <h2 class="message-header" tabindex="0">Your room has been reserved!</h3>
-        <p class="message-body" tabindex="0">We look forward to seeing you soon.</p>
       </section>
     </section>
   </main>
