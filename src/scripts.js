@@ -9,7 +9,7 @@ import './images/suite.png'
 import './images/junior-suite.png'
 import './images/single.png'
 
-import { getData, getCurrentCustomer, generateErrorMessage } from './api-calls';
+import { getData, getCurrentCustomer, checkResponseStatus, generateErrorMessage } from './api-calls';
 import Hotel from '../src/classes/Hotel';
 import Booking from '../src/classes/Booking';
 import Customer from '../src/classes/Customer';
@@ -75,11 +75,16 @@ function pageLoad() {
     event.preventDefault();
     validateCredentials();
   })
-}
+};
 
 function customerLogin() {
-
-}
+  getCurrentCustomer(currentCustomerID)
+  .then(data => {
+    currentCustomer = data
+    console.log('current customer', currentCustomer)
+    // fetchAllData();
+  })
+};
 
 function validateCredentials() {
   const customerIDString = usernameInput.value.substring(8);
@@ -163,22 +168,10 @@ function addNewBooking(id, date, roomNum) {
       'Content-Type': 'application/json'
     }
   })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(`Error Status ${response.status}: ${response.status.text}`);
-      } else {
-        return response.json();
-      }
-    })
+    .then(response => checkResponseStatus(response))
     .then(data => data)
     .then(() => fetch(`http://localhost:3001/api/v1/bookings`))
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(`Error Status ${response.status}: ${response.status.text}`);
-      } else {
-        return response.json();
-      }
-    })
+    .then(response => checkResponseStatus(response))
     .then(data => {
       hotel.bookings = data.bookings;
     })
@@ -200,7 +193,6 @@ function showElement(element) {
 
 function loadCustomer() {
   //create a new customer instance, passing through the customer data
-  currentCustomer = new Customer(customersData[0]);
   currentCustomer.filterBookings(hotel);
   currentCustomer.filterBookingsByDate(currentDate);
   returnTotalSpent();
