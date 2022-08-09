@@ -11,7 +11,7 @@ import './images/single.png'
 
 import { getData, checkStatus, generateErrorMessage } from './api-calls';
 import Booking from '../src/classes/Booking';
-import Hotel from '../src/classes/Hotel'; 
+import Hotel from '../src/classes/Hotel';
 import Customer from '../src/classes/Customer';
 import Room from '../src/classes/Room';
 
@@ -20,6 +20,7 @@ const reservationsButton = document.querySelector('.view-dashboard-button');
 const reserveRoomButton = document.querySelector('.reserve-room-button');
 const checkInDateInput = document.querySelector('#checkInDate');
 const bookingsMessage = document.querySelector('.all-bookings');
+const checkInSection = document.querySelector('.check-in-date-section')
 const bookingsDetails = document.querySelector('.all-bookings-details')
 const upcomingBookingsSection = document.querySelector('.upcoming-bookings-section');
 const pastBookingsSection = document.querySelector('.past-bookings-section');
@@ -29,7 +30,7 @@ const bookingStatusContainer = document.querySelector('.booking-status-container
 const checkInAvailabilityContainer = document.querySelector('.check-in-availability-section');
 const roomSelection = document.querySelector('#room-selection');
 const availableRoomCard = document.querySelector(".available-room-card");
-const showBookingConfirmation = document.querySelector('.booking-confirmation-message');
+const bookingConfirmation = document.querySelector('.booking-confirmation-message');
 
 let checkInDate;
 let bookingsData;
@@ -56,7 +57,7 @@ roomSelection.addEventListener('change', (event) => {
 });
 
 function handleEvent(event) {
-  if (event.type === 'click' || 
+  if (event.type === 'click' ||
     event.keyCode === 13) {
     if (event.target.classList.contains('reserve-room-button')) {
       reserveRoom(event)
@@ -68,14 +69,13 @@ function checkDate(event) {
   checkInDate = event.target.value.split('-').join('/');
   showBookingsView();
   loadAvailableRooms(checkInDate);
-  console.log(checkInDate);
+
   return checkInDate
 };
 
 function checkRoomSelection(event) {
   selectedRoomType = event.target.value;
   loadAvailableRoomsByType(selectedRoomType);
-  console.log(selectedRoomType);
   return selectedRoomType
 };
 
@@ -84,8 +84,7 @@ function reserveRoom(event) {
   selectedRoom = parseInt(selectedRoom, 10);
   addNewBooking(currentCustomer.id, checkInDate, selectedRoom);
   resetBookingsView();
-  console.log('within post: ', currentCustomer.currentBookings)
-}; 
+};
 
 /* ------ Fetch Requests ------ */
 Promise.all([
@@ -93,21 +92,19 @@ Promise.all([
   getData(`http://localhost:3001/api/v1/rooms`),
   getData(`http://localhost:3001/api/v1/customers`),
 ])
-.then(data => {
-  bookingsData = data[0].bookings;
-  roomsData = data[1].rooms;
-  customersData = data[2].customers;
-  
-  hotel = new Hotel(bookingsData, roomsData, customersData);
-  room = new Room(roomsData);
-  currentCustomer = new Customer(customersData[0]);
-  currentDate = new Date().toJSON().slice(0, 10).split('-').join('/');
-  
-  loadCustomer(hotel);
-  generateCustomerBookings();
-  console.log(customersData[0]);
-  console.log(currentDate);
-}
+  .then(data => {
+    bookingsData = data[0].bookings;
+    roomsData = data[1].rooms;
+    customersData = data[2].customers;
+
+    hotel = new Hotel(bookingsData, roomsData, customersData);
+    room = new Room(roomsData);
+    currentCustomer = new Customer(customersData[0]);
+    currentDate = new Date().toJSON().slice(0, 10).split('-').join('/');
+
+    loadCustomer(hotel);
+    generateCustomerBookings();
+  }
 );
 
 function addNewBooking(id, date, roomNum) {
@@ -115,24 +112,28 @@ function addNewBooking(id, date, roomNum) {
     method: 'POST',
     body: JSON.stringify({
       "userID": id,
-      "date": date, 
+      "date": date,
       "roomNumber": roomNum
     }),
     headers: {
       'Content-Type': 'application/json'
     }
   })
-  .then(checkStatus)
-  .then(response => response.json())
-  .then(data => console.log('resolved or not?, ', data))
-  .then(() => fetch(`http://localhost:3001/api/v1/bookings`))
-  .then(response => response.json())
-  .then(data => {
-    console.log('returned data', data)
-    data = hotel.bookings
-    console.log('after assigning to hotel bookings', data)
-  })
-  .catch(error => generateErrorMessage(error))
+    .then(checkStatus)
+    .then(response => response.json())
+    .then(data => data)
+    .then(() => fetch(`http://localhost:3001/api/v1/bookings`))
+    .then(response => response.json())
+    .then(data => {
+      // console.log('data: ', data)
+      hotel.bookings = data.bookings;
+      // console.log('hotel.bookings: ', hotel.bookings)
+    })
+    .then(() => {
+      loadCustomer() 
+      generateCustomerBookings()
+    })
+    .catch(error => generateErrorMessage(error))
 };
 
 /* ------ Helper Functions ------ */
@@ -148,7 +149,7 @@ function loadCustomer() {
   currentCustomer.filterBookings(hotel);
   currentCustomer.filterBookingsByDate(currentDate);
   returnTotalSpent();
-  console.log('all bookings', currentCustomer.bookings);
+  // console.log('all bookings', currentCustomer.bookings);
 };
 
 function generateCustomerBookings() {
@@ -158,9 +159,13 @@ function generateCustomerBookings() {
 
 /* ------ Page Views ------ */
 function showDashboardView() {
+  hideElement(reservationsButton);
+  hideElement(bookingConfirmation);
   showElement(pastBookingsSection);
   showElement(upcomingBookingsSection);
-  hideElement(reservationsButton);
+  showElement(checkInSection)
+  showElement(bookingsMessage);
+
   checkInDateInput.value = '';
 };
 
@@ -178,9 +183,11 @@ function resetBookingsView() {
   hideElement(bookingsMessage);
   hideElement(bookingStatusContainer);
   showElement(reservationsButton);
-  showElement(showBookingConfirmation);
+  showElement(bookingConfirmation);
+  hideElement(checkInSection)
   
   checkInDateInput.value = '';
+  roomSelection.value = '';
 };
 
 /* ------ Interpolation ------ */
@@ -237,7 +244,7 @@ function getRoomImage(room) {
 
 function loadAvailableRooms(checkInDate) {
   availableRooms = hotel.findAvailableRooms(checkInDate);
-  console.log('available rooms', availableRooms)
+  // console.log('available rooms', availableRooms)
 
   checkInAvailabilityContainer.innerHTML = ``;
   availableRooms.forEach(room => {
@@ -245,7 +252,7 @@ function loadAvailableRooms(checkInDate) {
   checkInAvailabilityContainer.innerHTML += `
     <div role="listitem" class="available-room-card" id="${room.number}">
       <p class="booking-card-message" tabindex="0">${room.roomType}</p>
-      <p class="booking-card-message" tabindex="0">$${room.costPerNight} per night</p>
+      <p class="booking-card-message" tabindex="0">Cost per Night: $${room.costPerNight}</p>
       <p class="booking-card-message" tabindex="0">Beds: ${room.numBeds}</p>
       <p class="booking-card-message" tabindex="0">Bed Size: ${room.bedSize}</p>
       <button type="button" class="reserve-room-button" id="${room.number}" tabindex="0">Reserve Room</button>
@@ -256,7 +263,6 @@ function loadAvailableRooms(checkInDate) {
 
 function loadAvailableRoomsByType(selectedRoomType) {
   availableRoomsByType = hotel.findAvailableRoomsByType(selectedRoomType);
-  console.log('inside availableroomsbytype', availableRoomsByType)
 
   checkInAvailabilityContainer.innerHTML = ``;
   availableRoomsByType.forEach(room => {
@@ -264,7 +270,7 @@ function loadAvailableRoomsByType(selectedRoomType) {
     checkInAvailabilityContainer.innerHTML += `
       <div role="listitem" class="available-room-card" id="${room.number}">
         <p class="booking-card-message" tabindex="0">Room Type: ${room.roomType}</p>
-        <p class="booking-card-message" tabindex="0">$${room.costPerNight} per night</p>
+        <p class="booking-card-message" tabindex="0">Cost per Night: $${room.costPerNight}</p>
         <p class="booking-card-message" tabindex="0">Beds: ${room.numBeds}</p>
         <p class="booking-card-message" tabindex="0">Bed Size: ${room.bedSize}</p>
         <button type="button" class="reserve-room-button" id="${room.number}" tabindex="0">Reserve Room</button>

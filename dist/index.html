@@ -55,13 +55,15 @@
       <section class="booking-status-container hidden">
         <h2 class="message-header" tabindex="0">These rooms are available for your chosen date</h2>
         <p class="message-body" tabindex="0">Narrow your search results by selecting a room type</p>
-        <select name="choice" id="room-selection" tabindex="0">
-          <option value="" tabindex="0"></option>
-          <option value="residential suite" tabindex="0">Residential Suite</option>
-          <option value="suite" tabindex="0">Suite</option>
-          <option value="junior suite" tabindex="0">Junior Suite</option>
-          <option value="single room" tabindex="0">Single Room</option>
-        </select>
+        <form id="select-room-type" aria-label="Select a room type"></form>
+          <select name="choice" id="room-selection" tabindex="0">
+            <option value="" tabindex="0" selected></option>
+            <option value="residential suite" tabindex="0">Residential Suite</option>
+            <option value="suite" tabindex="0">Suite</option>
+            <option value="junior suite" tabindex="0">Junior Suite</option>
+            <option value="single room" tabindex="0">Single Room</option>
+          </select>
+        </form>
         <section class="checkin-availability" id="checkinContainer">
           <div role="list" class="check-in-availability-section" id="checkinAvailabilitySection">
             <div role="listitem" class="available-room-card" id="">
