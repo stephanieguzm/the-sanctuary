@@ -9,8 +9,9 @@ import './images/suite.png'
 import './images/junior-suite.png'
 import './images/single.png'
 
-import { getData, generateErrorMessage } from './api-calls';
+import { getData, getCurrentCustomer, generateErrorMessage } from './api-calls';
 import Hotel from '../src/classes/Hotel';
+import Booking from '../src/classes/Booking';
 import Customer from '../src/classes/Customer';
 import Room from '../src/classes/Room';
 
@@ -32,6 +33,10 @@ const roomAvailabilityMessage = document.querySelector('.room-availability')
 const upcomingBookingsSection = document.querySelector('.upcoming-bookings-section');
 const upcomingBookingsContainer = document.querySelector('.upcoming-bookings');
 const userDashboard = document.querySelector('.user-dashboard-section');
+const loginSection = document.querySelector('.login-section');
+const loginForm = document.querySelector(".login-form");
+const username = document.querySelector('input[name="userName"]');
+const userPassword = document.querySelector('input[name="userPassword"]');
 
 let checkInDate;
 let bookingsData;
@@ -40,11 +45,15 @@ let customersData;
 let hotel;
 let room;
 let currentCustomer;
+let currentCustomerID;
 let currentDate;
 let availableRooms;
 let selectedRoomType;
 let availableRoomsByType;
 let selectedRoom;
+let newBooking;
+let nameVal;
+let passwordVal;
 
 checkInAvailabilityContainer.addEventListener('click', handleEvent);
 checkInAvailabilityContainer.addEventListener('keyup', handleEvent);
@@ -56,6 +65,10 @@ roomSelection.addEventListener('change', (event) => {
   checkRoomSelection(event)
 });
 
+/* ------ Login ------ */
+
+
+/* ------ Event Handlers ------ */
 function handleEvent(event) {
   if (event.type === 'click' ||
     event.keyCode === 13) {
@@ -87,25 +100,26 @@ function reserveRoom(event) {
 };
 
 /* ------ Fetch Requests ------ */
-Promise.all([
-  getData(`http://localhost:3001/api/v1/bookings`),
-  getData(`http://localhost:3001/api/v1/rooms`),
-  getData(`http://localhost:3001/api/v1/customers`),
-])
-  .then(data => {
-    bookingsData = data[0].bookings;
-    roomsData = data[1].rooms;
-    customersData = data[2].customers;
+function fetchData() {
+  Promise.all([
+      getData(`http://localhost:3001/api/v1/bookings`),
+      getData(`http://localhost:3001/api/v1/rooms`),
+      getData(`http://localhost:3001/api/v1/customers`),
+    ])
+      .then(data => {
+        bookingsData = data[0].bookings;
+        roomsData = data[1].rooms;
+        customersData = data[2].customers;
 
-    hotel = new Hotel(bookingsData, roomsData, customersData);
-    room = new Room(roomsData);
-    currentCustomer = new Customer(customersData[0]);
-    currentDate = new Date().toJSON().slice(0, 10).split('-').join('/');
+        hotel = new Hotel(bookingsData, roomsData, customersData);
+        room = new Room(roomsData);
+        currentDate = new Date().toJSON().slice(0, 10).split('-').join('/');
 
-    loadCustomer(hotel);
-    generateCustomerBookings();
-  }
-);
+        loadCustomer(hotel);
+        generateCustomerBookings();
+      }
+    );
+}
 
 function addNewBooking(id, date, roomNum) {
   return fetch(`http://localhost:3001/api/v1/bookings`, {
@@ -155,6 +169,8 @@ function showElement(element) {
 };
 
 function loadCustomer() {
+  //create a new customer instance, passing through the customer data
+  currentCustomer = new Customer(customersData[0]);
   currentCustomer.filterBookings(hotel);
   currentCustomer.filterBookingsByDate(currentDate);
   returnTotalSpent();
@@ -205,7 +221,6 @@ function returnTotalSpent() {
 
   bookingsMessage.innerHTML += `
     <div role="log" class="all-bookings-details" id="${currentCustomer.id}">
-      <h1>Reset, Revive, and Raise Your Vibe</h1>
       <h2 class="message-header" tabindex="0">Thank you for being a guest at The Sanctuary</h2>
       <p class="message-body" tabindex="0">You have spent $${amountSpent.toFixed(2)} on bookings.</p>
     </div>`;
