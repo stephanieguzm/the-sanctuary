@@ -9,7 +9,7 @@ import './images/suite.png'
 import './images/junior-suite.png'
 import './images/single.png'
 
-import { getData, checkStatus, generateErrorMessage } from './api-calls';
+import { getData, generateErrorMessage } from './api-calls';
 import Booking from '../src/classes/Booking';
 import Hotel from '../src/classes/Hotel';
 import Customer from '../src/classes/Customer';
@@ -119,11 +119,22 @@ function addNewBooking(id, date, roomNum) {
       'Content-Type': 'application/json'
     }
   })
-    .then(checkStatus)
-    .then(response => response.json())
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(response.statusText);
+      } else {
+        return response.json();
+      }
+    })
     .then(data => data)
     .then(() => fetch(`http://localhost:3001/api/v1/bookings`))
-    .then(response => response.json())
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(response.statusText);
+      } else {
+        return response.json();
+      }
+    })
     .then(data => {
       // console.log('data: ', data)
       hotel.bookings = data.bookings;

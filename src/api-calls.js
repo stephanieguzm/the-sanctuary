@@ -1,17 +1,14 @@
 var getData = (url) => {
   return fetch(url)
-    .then(checkStatus)
-    .then(response => response.json())
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(response.statusText);
+      } else {
+        return response.json();
+      }
+    })
     .catch(error => generateErrorMessage(error))
-}
-
-var checkStatus = (response) => {
-  if (response.ok) {
-    return Promise.resolve(response);
-  } else {
-    return Promise.reject(new Error(generateErrorMessage(response)));
-  }
-}
+};
 
 var generateErrorMessage = (response) => {
   console.log('Error: ', response)
@@ -20,6 +17,6 @@ var generateErrorMessage = (response) => {
   // errorMessageContent.innerHTML +=
   //   `<h2 class="modal-title" id="error-message-modal">${response.statusText}: Oops! Looks like there was an error!</h2>`;
   // MicroModal.show("modal-3")
-}
+};
 
-export { getData, checkStatus, generateErrorMessage };
+export { getData, generateErrorMessage };
