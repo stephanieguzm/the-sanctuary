@@ -169,6 +169,7 @@ function showBookingsView() {
   hideElement(upcomingBookingsSection);
   showElement(reservationsButton);
   showElement(bookingStatusContainer);
+  hideElement(bookingsMessage);
 };
 
 function resetBookingsView() {
@@ -261,7 +262,7 @@ function loadAvailableRoomsByType(selectedRoomType) {
     // let roomImage = getRoomImage(room);
     checkInAvailabilityContainer.innerHTML +=
       `<div role="listitem" class="available-room-card" id="${room.number}">
-        <p class="booking-card-message" tabindex="0">${room.roomType}</p>
+        <p class="booking-card-message" tabindex="0">Room Type: ${room.roomType}</p>
         <p class="booking-card-message" tabindex="0">$${room.costPerNight} per night</p>
         <p class="booking-card-message" tabindex="0">Beds: ${room.numBeds}</p>
         <p class="booking-card-message" tabindex="0">Bed Size: ${room.bedSize}</p>
