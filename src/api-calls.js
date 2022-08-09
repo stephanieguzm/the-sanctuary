@@ -10,6 +10,18 @@ var getData = (url) => {
     .catch(error => generateErrorMessage(error))
 };
 
+var getCurrentCustomer = (id) => {
+  return fetch(`http://localhost:3001/api/v1/customers/${id}`)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`Error Status ${response.status}: ${response.status.text}`);
+      } else {
+        return response.json();
+      }
+    })
+    .catch(error => generateErrorMessage(error))
+};
+
 var generateErrorMessage = (response) => {
   hideElement(bookingConfirmation);
   hideElement(pastBookingsSection);
@@ -29,4 +41,4 @@ var generateErrorMessage = (response) => {
 };
 
 
-export { getData, generateErrorMessage };
+export { getData, getCurrentCustomer, generateErrorMessage };
