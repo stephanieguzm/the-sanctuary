@@ -53,8 +53,9 @@
     </section>
     <section class="booking-section">
       <section class="booking-status-container hidden">
-        <h2 class="message-header" tabindex="0">These rooms are available for your chosen date</h2>
-        <p class="message-body" tabindex="0">Narrow your search results by selecting a room type</p>
+        <div role ="log" class="room-availability">
+          <h2 class="message-header" tabindex="0">These rooms are available for your chosen date</h2>
+        </div>
         <form id="select-room-type" aria-label="Select a room type"></form>
           <select name="choice" id="room-selection" tabindex="0">
             <option value="" tabindex="0" selected></option>
@@ -64,6 +65,7 @@
             <option value="single room" tabindex="0">Single Room</option>
           </select>
         </form>
+        <p class="message-body" tabindex="0">Please adjust your search criteria to see other results.</p>
         <section class="checkin-availability" id="checkinContainer">
           <div role="list" class="check-in-availability-section" id="checkinAvailabilitySection">
             <div role="listitem" class="available-room-card" id="">
@@ -74,6 +76,8 @@
               <button type="button" class="reserve-room-button" id="">Reserve Room</button>
             </div>
           </div>
+        </section>
+        <section class="error-message-section">
         </section>
       </section>
     </section>
