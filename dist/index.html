@@ -13,8 +13,8 @@
 <body>
   <main>
     <nav role="navigation" class="nav-bar-header">
-      <div role="navigation-bar" class="navigation-bar">
-        <img class="logo" src="./images/logo.png" alt="The Sanctuary logo">
+      <div role="navigation" aria-label="Main" class="navigation-bar">
+        <img class="logo" tabindex="0" src="./images/logo.png" alt="The Sanctuary logo">
       </div>
       <div class="nav-bar-buttons">
         <button type="button" class="view-dashboard-button hidden" id="dashboardButton">Your Reservations</button>
@@ -22,40 +22,41 @@
     </nav>
     <section class="user-dashboard-section" id="userDashboardSection">
       <section class="booking-section">
-        <h2>Book Your Next Escape</h2>
-        <form role="check-in-date-box">
-          <label for="start">Check-in date:</label>
-          <input type="date" class="check-in-date"id="checkInDate" min="2022-08-10" max="2025-12-31" name="check-in-date" required>
+        <h1 tabindex="0">Book Your Next Escape</h2>
+        <p class="message-body" tabindex="0">Select a check-in date</p>
+        <form id="check-in-date-box" aria-label="Select a check-in date"></form>
+          <label for="checkInDate" tabindex="0">Check-in date: </label>
+          <input type="date" class="check-in-date" id="checkInDate" min="2022-08-10" max="2025-12-31" name="check-in-date" required>
           <!-- <button class="search-check-in-date">Search</button> -->
         </form>
       </section>
       <section class="all-bookings">
         <div role="log" class="all-bookings-details">
-          <h3 class="message-header">Thank you for being a guest at The Sanctuary</h3>
-          <p class="message-body">You have spent $10,000 on bookings.</p>
+          <h2 class="message-header" tabindex="0">Thank you for being a guest at The Sanctuary</h2>
+          <p class="message-body"tabindex="0">You have spent $10,000 on bookings.</p>
         </div>
       </section>
       <section class="upcoming-bookings-section">
-        <h3>Upcoming Bookings</h3>
+        <h2 class="message-header" tabindex="0">Upcoming Bookings</h2>
         <div role="list" class="upcoming-bookings" id="showAUpcomingBookingsSection">
         </div>
       </section>
       <section class="past-bookings-section">
-        <h3>Past Bookings</h3>
+        <h2 class="message-header" tabindex="0">Past Bookings</h2>
         <div role="list" class="past-bookings" id="showPastBookingsSection">
         </div>
       </section>
     </section>
     <section class="booking-section">
       <section class="booking-status-container hidden">
-        <h3 class="message-header">These rooms are available for your chosen date</h3>
-        <p class="message-body">Narrow your search results by selecting a room type</p>
-        <select name="choice" id="room-selection">
-          <option value=""></option>
-          <option value="residential suite">Residential Suite</option>
-          <option value="suite">Suite</option>
-          <option value="junior suite">Junior Suite</option>
-          <option value="single room">Single Room</option>
+        <h2 class="message-header" tabindex="0">These rooms are available for your chosen date</h2>
+        <p class="message-body" tabindex="0">Narrow your search results by selecting a room type</p>
+        <select name="choice" id="room-selection" tabindex="0">
+          <option value="" tabindex="0"></option>
+          <option value="residential suite" tabindex="0">Residential Suite</option>
+          <option value="suite" tabindex="0">Suite</option>
+          <option value="junior suite" tabindex="0">Junior Suite</option>
+          <option value="single room" tabindex="0">Single Room</option>
         </select>
         <section class="checkin-availability" id="checkinContainer">
           <div role="list" class="check-in-availability-section" id="checkinAvailabilitySection">
@@ -69,9 +70,9 @@
           </div>
         </section>
       </section>
-      <section class="booking-confirmation-message hide" id="bookingConfirmation">
-        <h3>Your room has been reserved!</h3>
-        <p>We look forward to seeing you soon.</p>
+      <section class="booking-confirmation-message hidden" id="bookingConfirmation">
+        <h2 class="message-header" tabindex="0">Your room has been reserved!</h3>
+        <p class="message-body" tabindex="0">We look forward to seeing you soon.</p>
       </section>
     </section>
   </main>
