@@ -20,24 +20,24 @@
         <button type="button" class="view-dashboard-button hidden" id="dashboardButton">Your Reservations</button>
       </div>
     </nav>
-    <section class="login">
+    <section class="login-section">
       <div class="container">
         <h1 class="login-banner" tabindex="0">Reset, Revive, and Raise Your Vibe</h1>
         <h2 class="text-center" tabindex="0">Login</h2>
         <form class="login-form" id="loginForm" aria-label="Please login to book a room">
           <div class="input-group">
             <label for="username" class="label" tabindex="0">Username</label>
-            <input type="text" id="username" class="input">
+            <input type="text" name="userName" required>
             <span class="error-message"></span>
           </div>
           <br>
           <div class="input-group">
             <label for="password" class="label" tabindex="0">Password</label>
-            <input type="password" id="password" class="input">
+            <input type="password" name="userPassword" class="input" required>
             <span class="error-message"></span>
           </div>
           <br>
-          <button class="button" type="submit">Login</button>
+          <button class="login-button" type="submit">Login</button>
         </form>
       </div>
     </section>
