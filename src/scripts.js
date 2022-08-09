@@ -188,11 +188,12 @@ function returnTotalSpent() {
   const amountSpent = currentCustomer.calculateTotalAmountSpent(hotel);
   bookingsMessage.innerHTML = ``;
 
-  bookingsMessage.innerHTML +=
-    `<div role="log" class="all-bookings-details" id="${currentCustomer.id}">
-    <h2 class="message-header" tabindex="0">Thank you for being a guest at The Sanctuary</h2>
-    <p class="message-body" tabindex="0">You have spent $${amountSpent.toFixed(2)} on bookings.</p>
-  </div>`;
+  bookingsMessage.innerHTML += `
+    <div role="log" class="all-bookings-details" id="${currentCustomer.id}">
+      <h1>Reset, Revive, and Raise Your Vibe</h1>
+      <h2 class="message-header" tabindex="0">Thank you for being a guest at The Sanctuary</h2>
+      <p class="message-body" tabindex="0">You have spent $${amountSpent.toFixed(2)} on bookings.</p>
+    </div>`;
 };
 
 function generatePastBookingCard() {
@@ -200,8 +201,8 @@ function generatePastBookingCard() {
 
   const pastBookings = currentCustomer.pastBookings;
   return pastBookings.forEach(booking => {
-    pastBookingsContainer.innerHTML +=
-      `<div role="listitem" class="individual-booking-card">
+    pastBookingsContainer.innerHTML += `
+      <div role="listitem" class="individual-booking-card">
         <img src="./images/suite.png" class="booking-card" alt="${booking.date} booking">
         <p class="booking-card-message" tabindex="0">Date: ${booking.date}</p>
         <p class="booking-card-message" tabindex="0">Booking ID: ${booking.id}</p>
@@ -213,8 +214,8 @@ function generateUpcomingBookingCard() {
   upcomingBookingsContainer.innerHTML = ``;
 
   return currentCustomer.upcomingBookings.forEach(booking => {
-    upcomingBookingsContainer.innerHTML +=
-      `<div role="listitem" class="individual-booking-card" id="${booking.id}">
+    upcomingBookingsContainer.innerHTML += `
+      <div role="listitem" class="individual-booking-card" id="${booking.id}">
       <img src="./images/suite.png" class="booking-card" alt="${booking.date} booking">
       <p class="booking-card-message" tabindex="0">Date: ${booking.date}</p>
       <p class="booking-card-message" tabindex="0">Booking ID: ${booking.id}</p>
@@ -241,8 +242,8 @@ function loadAvailableRooms(checkInDate) {
   checkInAvailabilityContainer.innerHTML = ``;
   availableRooms.forEach(room => {
   // let roomImage = getRoomImage(room);
-  checkInAvailabilityContainer.innerHTML +=
-    `<div role="listitem" class="available-room-card" id="${room.number}">
+  checkInAvailabilityContainer.innerHTML += `
+    <div role="listitem" class="available-room-card" id="${room.number}">
       <p class="booking-card-message" tabindex="0">${room.roomType}</p>
       <p class="booking-card-message" tabindex="0">$${room.costPerNight} per night</p>
       <p class="booking-card-message" tabindex="0">Beds: ${room.numBeds}</p>
@@ -260,8 +261,8 @@ function loadAvailableRoomsByType(selectedRoomType) {
   checkInAvailabilityContainer.innerHTML = ``;
   availableRoomsByType.forEach(room => {
     // let roomImage = getRoomImage(room);
-    checkInAvailabilityContainer.innerHTML +=
-      `<div role="listitem" class="available-room-card" id="${room.number}">
+    checkInAvailabilityContainer.innerHTML += `
+      <div role="listitem" class="available-room-card" id="${room.number}">
         <p class="booking-card-message" tabindex="0">Room Type: ${room.roomType}</p>
         <p class="booking-card-message" tabindex="0">$${room.costPerNight} per night</p>
         <p class="booking-card-message" tabindex="0">Beds: ${room.numBeds}</p>
