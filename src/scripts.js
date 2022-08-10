@@ -43,6 +43,7 @@ let checkInDate;
 let bookingsData;
 let roomsData;
 let customersData;
+let customerData;
 let hotel;
 let room;
 let currentCustomer;
@@ -55,7 +56,6 @@ let newBooking;
 let currentCustomerID;
 let usernameInput = document.querySelector('[name="userName"]');
 let passwordInput = document.querySelector('[name="userPassword"]');
-// const password = 'overlook2021';
 
 checkInAvailabilityContainer.addEventListener('click', handleEvent);
 checkInAvailabilityContainer.addEventListener('keyup', handleEvent);
@@ -73,16 +73,19 @@ window.onload = pageLoad();
 function pageLoad() {
   loginForm.addEventListener('submit', function (event) {
     event.preventDefault();
+    loginPageView();
     validateCredentials();
+    customerLogin();
   })
 };
 
+//rework so this changes page view. will instantiate customer in PromiseAll
 function customerLogin() {
   getCurrentCustomer(currentCustomerID)
   .then(data => {
-    currentCustomer = data
-    console.log('current customer', currentCustomer)
-    // fetchAllData();
+    customerData = data;
+    currentCustomer = new Customer(customerData)
+    fetchAllData();
   })
 };
 
@@ -92,8 +95,7 @@ function validateCredentials() {
   if (usernameInput.value === `customer${customerIDString}` && passwordInput.value === 'overlook2021') {
     currentCustomerID = parseInt(customerIDString)
     loginError.innerText = '';
-    customerLogin();
-    console.log('success!')
+    // customerLogin();
     return currentCustomerID
 
   } else {
@@ -136,24 +138,26 @@ function reserveRoom(event) {
 
 /* ------ Fetch Requests ------ */
 function fetchAllData() {
-  Promise.all([
-      getData(`http://localhost:3001/api/v1/bookings`),
-      getData(`http://localhost:3001/api/v1/rooms`),
-      getData(`http://localhost:3001/api/v1/customers`),
-    ])
-      .then(data => {
-        bookingsData = data[0].bookings;
-        roomsData = data[1].rooms;
-        customersData = data[2].customers;
+  return Promise.all([
+    getData(`http://localhost:3001/api/v1/bookings`),
+    getData(`http://localhost:3001/api/v1/rooms`),
+    getData(`http://localhost:3001/api/v1/customers`),
+    getCurrentCustomer(currentCustomerID)
+  ])
+    .then(data => {
+      bookingsData = data[0].bookings;
+      roomsData = data[1].rooms;
+      customersData = data[2].customers;
+      // customerData = data[3];
 
-        hotel = new Hotel(bookingsData, roomsData, customersData);
-        room = new Room(roomsData);
-        currentDate = new Date().toJSON().slice(0, 10).split('-').join('/');
-
-        loadCustomer(hotel);
-        generateCustomerBookings();
-      }
-    );
+      hotel = new Hotel(bookingsData, roomsData, customersData);
+      room = new Room(roomsData);
+      // currentCustomer = new Customer(customerData)
+      currentDate = new Date().toJSON().slice(0, 10).split('-').join('/');
+      
+      loadDashboard();
+    }
+  );
 }
 
 function addNewBooking(id, date, roomNum) {
@@ -176,8 +180,7 @@ function addNewBooking(id, date, roomNum) {
       hotel.bookings = data.bookings;
     })
     .then(() => {
-      loadCustomer() 
-      generateCustomerBookings()
+      loadDashboard()
     })
     .catch(error => generateErrorMessage(error))
 };
@@ -191,8 +194,14 @@ function showElement(element) {
   element.classList.remove('hidden');
 };
 
-function loadCustomer() {
-  //create a new customer instance, passing through the customer data
+function loadDashboard() {
+  hideLoginView();
+  loadAllBookings();
+  generateCustomerBookings();
+
+}
+
+function loadAllBookings() {
   currentCustomer.filterBookings(hotel);
   currentCustomer.filterBookingsByDate(currentDate);
   returnTotalSpent();
@@ -204,6 +213,17 @@ function generateCustomerBookings() {
 };
 
 /* ------ Page Views ------ */
+
+function loginPageView() {
+  hideElement(userDashboard);
+  showElement(loginSection);
+};
+
+function hideLoginView() {
+  showElement(userDashboard);
+  hideElement(loginSection);
+};
+
 function showDashboardView() {
   hideElement(reservationsButton);
   hideElement(bookingConfirmation);
