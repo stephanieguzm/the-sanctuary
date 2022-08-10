@@ -26,7 +26,7 @@ Code Review by [Abby Luce](https://github.com/abbyluce)
 - HTML
 
 ## Accessibility
-The project is fully tabbable and optimized for screen readers.
+The project is fully tabbable, prioritizes semantic HTML use, and incorporates WAI-ARIA roles as needed.
 
 ## Login and Dashboard View
 ![](https://github.com/stephanieguzm/the-sanctuary/blob/main/login.gif)
