@@ -23,7 +23,7 @@ describe('Hotel', () => {
 
   it('should store all bookings', () => {
     expect(hotel).to.have.a.property('bookings');
-    expect(hotel.bookings).to.be.an('array')
+    expect(hotel.bookings).to.be.an('array');
     expect(hotel.bookings.length).to.equal(11);
     expect(hotel.bookings).to.deep.equal([
       {
@@ -97,7 +97,7 @@ describe('Hotel', () => {
 
   it('should store all rooms', () => {
     expect(hotel).to.have.a.property('rooms');
-    expect(hotel.rooms).to.be.an('array')
+    expect(hotel.rooms).to.be.an('array');
     expect(hotel.rooms.length).to.equal(16);
     expect(hotel.rooms).to.deep.equal([
       {
@@ -267,14 +267,6 @@ describe('Hotel', () => {
     expect(hotel.currentCustomer.id).to.equal(1);
     expect(hotel.currentCustomer.name).to.equal('Leatha Ullrich');
 
-  });
-
-  it('should find all room types', () => {
-    const roomTypes = hotel.findRoomTypes();
-
-    expect(roomTypes).to.be.an('array');
-    expect(roomTypes.length).to.equal(4); 
-    expect(roomTypes).to.deep.equal(['suite', 'single room', 'residential suite', 'junior suite']);
   });
 
   it('should find all available rooms by date', () => {

@@ -11,16 +11,6 @@ class Hotel {
     this.currentCustomer = this.customers.find(customer => customer.id === customerID);
   }
 
-  findRoomTypes() {
-    const roomTypes = [];
-    const getRoomTypes = this.rooms.forEach((room) => {
-      if (!roomTypes.includes(room.roomType)) {
-        roomTypes.push(room.roomType)
-      }
-    })
-    return roomTypes
-  }
-
   findAvailableRooms(requestedDate) {
     let unavailableRooms = this.bookings.reduce( (total, booking) => {
       if (booking.date === requestedDate) {
