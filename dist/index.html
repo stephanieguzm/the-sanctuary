@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap" rel="stylesheet"> -->
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Raleway&display=swap" rel="stylesheet">
   <link href="styles.css">
   <title>The Sanctuary</title>
 </head>
@@ -33,7 +33,7 @@
           <div class="input-group">
             <label for="password" class="label" tabindex="0">Password</label>
             <input type="password" name="userPassword" id="password" required>
-            <span class="error-message"></span>
+            <p class="error-message"></p>
           </div>
           <br>
           <button class="login-button" type="submit">Login</button>
@@ -77,7 +77,7 @@
         </div>
         <form id="select-room-type" aria-label="Select a room type"></form>
           <select name="choice" id="room-selection" tabindex="0">
-            <option value="" tabindex="0" selected></option>
+            <option value="" tabindex="0" selected>Room Type</option>
             <option value="residential suite" tabindex="0">Residential Suite</option>
             <option value="suite" tabindex="0">Suite</option>
             <option value="junior suite" tabindex="0">Junior Suite</option>
