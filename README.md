@@ -36,7 +36,7 @@ The project is fully tabbable and optimized for screen readers.
 
 ## Installation and Setup: 
 
-This project utilizes the Overlook API which can be accessed [here] (https://github.com/turingschool-examples/overlook-api)
+This project utilizes the Overlook API which can be accessed [here](https://github.com/turingschool-examples/overlook-api)
 
 ### Backend Setup
 
