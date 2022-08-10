@@ -28,19 +28,24 @@ describe('Customer', () => {
   });
 
   it('should have an id', () => {
+    expect(customer1).to.have.a.property('id');
     expect(customer1.id).to.equal(1);
     expect(customer3.id).to.equal(3);
   });
 
   it('should have a name', () => {
+    expect(customer1).to.have.a.property('name');
     expect(customer1.name).to.equal('Leatha Ullrich');
     expect(customer3.name).to.equal('Kelvin Schiller');
   });
 
   it('should be able to retrieve all bookings for customer', () => {
+    expect(customer1).to.have.a.property('bookings');
+    expect(customer1.bookings).to.be.an('array');
+    expect(customer1.bookings.length).to.equal(0);
+    
     customer1.filterBookings(hotel);
 
-    expect(customer1.bookings).to.be.an('array')
     expect(customer1.bookings.length).to.equal(6);
     expect(customer1.bookings).to.deep.equal([
       {
@@ -85,9 +90,14 @@ describe('Customer', () => {
   it('should be able to store past bookings for customer', () => {
     const todaysDate = '2022/08/04';
 
+    expect(customer1).to.have.a.property('pastBookings');
+    expect(customer1.pastBookings).to.be.an('array');
+    expect(customer1.pastBookings.length).to.equal(0);
+
     customer1.filterBookings(hotel);
     customer1.filterBookingsByDate(todaysDate);
     
+    expect(customer1.pastBookings.length).to.equal(3);
     expect(customer1.pastBookings).to.deep.equal([
       {
         id: "5fwrgu4i7k55hl6t8",
@@ -113,8 +123,14 @@ describe('Customer', () => {
   it('should be able to store upcoming bookings for customer', () => {
     const todaysDate = '2022/08/04';
 
+    expect(customer1).to.have.a.property('upcomingBookings');
+    expect(customer1.upcomingBookings).to.be.an('array');
+    expect(customer1.upcomingBookings.length).to.equal(0);
+
     customer1.filterBookings(hotel);
     customer1.filterBookingsByDate(todaysDate);
+
+    expect(customer1.upcomingBookings.length).to.equal(3);
     expect(customer1.upcomingBookings).to.deep.equal([
       {
         id: "5fwrgu4i7k55hl6x8",
@@ -138,6 +154,9 @@ describe('Customer', () => {
   });
 
   it('should be able to calculate the total amount customer has spent on bookings', () => {
+    expect(customer1).to.have.a.property('totalAmountSpent');
+    expect(customer1.totalAmountSpent).to.be.an('number');
+    
     customer1.filterBookings(hotel)
     customer1.calculateTotalAmountSpent(hotel);
 

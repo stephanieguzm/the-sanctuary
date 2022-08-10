@@ -1,34 +1,23 @@
-* {
-  border: 1px solid red;
-}
-
 html {
   width: 100%;
-  background-color: rgb(209, 168, 157);
+  background-color: rgb(252, 246, 244);
 }
 
 body {
   width: 100%;
   margin: 0;
   padding: 0;
-  /* font-family: 'Roboto Condensed', sans-serif; */
-  /* background-image: url('./images/courtyard.png'); */
-  /* background-size: cover; */
-  /* background-repeat: no-repeat; */
-  /* overscroll-behavior-y: none;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-  display: flex;
-  flex-direction: column;
-  position: relative; */
+  font-family: 'Raleway', sans-serif;
 }
 
 h1 {
+  text-align: center;
   width: 100%;
-  /* margin: 0;
-  padding: 0; */
+  font-family: 'Dancing Script', cursive;
+  font-size: 2em;
 }
 
+h2,
 h3 {
   text-align: center;
 }
@@ -43,14 +32,38 @@ nav {
   background-color: rgb(209, 168, 157);
 }
 
+button {
+  background-color: rgb(152, 190, 146);
+  border-color: black;
+  box-shadow: 3px 3px 2px #808080a1;
+  font-family: 'Raleway', sans-serif;
+  font-size: 1em;
+  margin-top: 15px;
+  margin-left: 10px;
+  margin-right: 10px;
+  padding: 10px;
+  transition-duration: .3s;
+}
+
+button:hover {
+  background-color: black;
+  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+  color: white;
+  cursor: pointer;
+}
+
 .user-dashboard-section,
-.booking-status-container
-.past-bookings {
+.booking-status-container,
+.past-bookings,
+.login-section {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
   align-content: center;
+  padding: 2%;
+  margin: 2%;
+  text-align: center;
 }
 
 .show-rooms-container {
@@ -66,24 +79,14 @@ nav {
 }
 
 .logo {
+  padding-left: 2%;
   width: 40%;
   height: auto;
 }
 
 .navigation-bar {
   padding: .5em;
-
-}
-
-button {
-  border-color: black;
-  box-shadow: 3px 3px 2px #808080a1;
-  font-family: 'Press Start 2P', cursive;
-  font-size: 1em;
-  margin-top: 30px;
-  margin-right: 8px;
-  padding: 15px;
-  transition-duration: .3s;
+  background-color: rgb(209, 168, 157);
 }
 
 .upcoming-bookings,
@@ -101,8 +104,11 @@ button {
   justify-content: center;
   flex-direction: column;
   text-align: center;
-  background-color: #ffffffd9;
+  background-color: rgb(209, 168, 157);
   margin: 1%;
+  margin-top: 10px;
+  padding-bottom: 10px;
+  border: 1px rgba(0, 0, 0, 0.476);
   border-radius: 2%;
   box-shadow: 5px 5px 7px grey;
   overflow: hidden;
@@ -124,25 +130,15 @@ button {
   margin: 0;
 }
 
+.error-message {
+  color: red;
+  font-weight: 700;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
 .hidden {
   display: none !important;
 }
-
-/* body {
-  background: 
-}
-
-/* nav { */
-  /* color: green#123524, white #FEFDFA pink#EDCADB
-/* } */
-
-/* light blue #52b3c2
-purple #8f4c6f
-ac335e
-
-*/
-
-
-/* fonts  */
-/* futura */
- /* freight-big-pro */

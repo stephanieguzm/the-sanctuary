@@ -25,22 +25,26 @@ describe('Booking', () => {
   });
 
   it('should have a booking id', () => {
+    expect(booking2).to.have.a.property('id');
     expect(booking2.id).to.be.a('string');
     expect(booking1.id).to.equal('5fwrgu4i7k55hl6x8');
     expect(booking3.id).to.equal('5fwrgu4i7k55hl76o');
   });
 
   it('should have a customer id', () => {
+    expect(booking2).to.have.a.property('userID');
     expect(booking1.userID).to.equal(1);
     expect(booking3.userID).to.equal(3);
   });
 
   it('should have a booking date', () => {
+    expect(booking1).to.have.a.property('date');
     expect(booking2.date).to.equal('2023/12/22');
     expect(booking3.date).to.equal('2023/01/13');
   });
 
   it('should have a room number', () => {
+    expect(booking1).to.have.a.property('roomNumber');
     expect(booking2.roomNumber).to.equal(15);
     expect(booking3.roomNumber).to.equal(14);
   });
