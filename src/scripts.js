@@ -170,6 +170,9 @@ function addNewBooking(id, date, roomNum) {
     }
   })
     .then(response => checkResponseStatus(response))
+// recommendation: push data into hotel.bookings here 
+// minimize requests to the server. 
+// Too many requests can slow page load. You also a
     .then(data => data)
     .then(() => fetch(`http://localhost:3001/api/v1/bookings`))
     .then(response => checkResponseStatus(response))
@@ -273,7 +276,7 @@ function generatePastBookingCard() {
   return pastBookings.forEach(booking => {
     pastBookingsContainer.innerHTML += `
       <div role="listitem" class="individual-booking-card">
-        <img src="./images/suite.png" class="booking-card" alt="${booking.date} booking">
+        <img src="${getRoomImage(room.roomType)}" class="booking-card" alt="${booking.date} booking">
         <p class="booking-card-message" tabindex="0">Date: ${booking.date}</p>
         <p class="booking-card-message" tabindex="0">Booking ID: ${booking.id}</p>
       </div>`
@@ -286,7 +289,7 @@ function generateUpcomingBookingCard() {
   return currentCustomer.upcomingBookings.forEach(booking => {
     upcomingBookingsContainer.innerHTML += `
       <div role="listitem" class="individual-booking-card" id="${booking.id}">
-      <img src="./images/suite.png" class="booking-card" alt="${booking.date} booking">
+      <img src="${getRoomImage(room.roomType)}" class="booking-card" alt="${booking.date} booking">
       <p class="booking-card-message" tabindex="0">Date: ${booking.date}</p>
       <p class="booking-card-message" tabindex="0">Booking ID: ${booking.id}</p>
     </div>`;
@@ -311,6 +314,7 @@ function loadAvailableRooms(checkInDate) {
     availableRooms.forEach(room => {
       checkInAvailabilityContainer.innerHTML += `
       <div role="listitem" class="available-room-card" id="${room.number}">
+      <img src="${getRoomImage(room.roomType)}" class="available-room" alt=" booking">
       <p class="booking-card-message" tabindex="0">${room.roomType}</p>
       <p class="booking-card-message" tabindex="0">Cost per Night: $${room.costPerNight}</p>
       <p class="booking-card-message" tabindex="0">Beds: ${room.numBeds}</p>
@@ -341,6 +345,7 @@ function loadAvailableRoomsByType(selectedRoomType) {
       
       checkInAvailabilityContainer.innerHTML += `
         <div role="listitem" class="available-room-card" id="${room.number}">
+        <img src="${getRoomImage(room.roomType)}" class="available-room" alt=" booking">
           <p class="booking-card-message" tabindex="0">${room.roomType}</p>
           <p class="booking-card-message" tabindex="0">Cost per Night: $${room.costPerNight}</p>
           <p class="booking-card-message" tabindex="0">Beds: ${room.numBeds}</p>
@@ -352,3 +357,14 @@ function loadAvailableRoomsByType(selectedRoomType) {
   }
 };
 
+function getRoomImage(roomType) {
+  if (roomType === 'residential suite') {
+    return "./images/residential-suite.png";
+  } else if (roomType === 'suite') {
+    return "./images/suite.png";
+  } else if (roomType === 'junior suite') {
+    return "./images/junior-suite.png";
+  } else {
+    return "./images/single.png";
+  }
+};
