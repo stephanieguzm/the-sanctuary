@@ -1,7 +1,5 @@
-// An example of how you tell webpack to use a CSS (SCSS) file
 import '../dist/bundle.js';
 import './css/styles.css';
-// An example of how you tell webpack to use an image (also need to link to it in the index.html)
 import './images/logo.png'
 import './images/courtyard.png'
 import './images/residential-suite.png'
@@ -11,7 +9,6 @@ import './images/single.png'
 
 import { getData, getCurrentCustomer, checkResponseStatus, generateErrorMessage } from './api-calls';
 import Hotel from '../src/classes/Hotel';
-import Booking from '../src/classes/Booking';
 import Customer from '../src/classes/Customer';
 import Room from '../src/classes/Room';
 
@@ -36,8 +33,10 @@ const userDashboard = document.querySelector('.user-dashboard-section');
 const loginSection = document.querySelector('.login-section');
 const loginForm = document.getElementById("loginForm");
 const loginError = document.querySelector('.error-message');
-// const usernameValue = document.querySelector('[name="userName"]').value;
-// const passwordValue = document.querySelector('[name="userPassword"]').value;
+let usernameInput = document.querySelector('[name="userName"]');
+let passwordInput = document.querySelector('[name="userPassword"]');
+
+/* ------ Global Variables ------ */
 
 let checkInDate;
 let bookingsData;
@@ -52,10 +51,9 @@ let availableRooms;
 let selectedRoomType;
 let availableRoomsByType;
 let selectedRoom;
-let newBooking;
 let currentCustomerID;
-let usernameInput = document.querySelector('[name="userName"]');
-let passwordInput = document.querySelector('[name="userPassword"]');
+
+/* ------ Event Listeners ------ */
 
 checkInAvailabilityContainer.addEventListener('click', handleEvent);
 checkInAvailabilityContainer.addEventListener('keyup', handleEvent);
@@ -67,7 +65,8 @@ roomSelection.addEventListener('change', (event) => {
   checkRoomSelection(event)
 });
 
-/* ------ Login ------ */
+/* ------ Login Functions ------ */
+
 window.onload = pageLoad();
 
 function pageLoad() {
@@ -79,7 +78,6 @@ function pageLoad() {
   })
 };
 
-//rework so this changes page view. will instantiate customer in PromiseAll
 function customerLogin() {
   getCurrentCustomer(currentCustomerID)
   .then(data => {
@@ -95,7 +93,6 @@ function validateCredentials() {
   if (usernameInput.value === `customer${customerIDString}` && passwordInput.value === 'overlook2021') {
     currentCustomerID = parseInt(customerIDString)
     loginError.innerText = '';
-    // customerLogin();
     return currentCustomerID
 
   } else {
@@ -106,6 +103,7 @@ function validateCredentials() {
 };
 
 /* ------ Event Handlers ------ */
+
 function handleEvent(event) {
   if (event.type === 'click' ||
     event.keyCode === 13) {
@@ -137,6 +135,7 @@ function reserveRoom(event) {
 };
 
 /* ------ Fetch Requests ------ */
+
 function fetchAllData() {
   return Promise.all([
     getData(`http://localhost:3001/api/v1/bookings`),
@@ -148,17 +147,15 @@ function fetchAllData() {
       bookingsData = data[0].bookings;
       roomsData = data[1].rooms;
       customersData = data[2].customers;
-      // customerData = data[3];
 
       hotel = new Hotel(bookingsData, roomsData, customersData);
       room = new Room(roomsData);
-      // currentCustomer = new Customer(customerData)
       currentDate = new Date().toJSON().slice(0, 10).split('-').join('/');
       
       loadDashboard();
     }
   );
-}
+};
 
 function addNewBooking(id, date, roomNum) {
   return fetch(`http://localhost:3001/api/v1/bookings`, {
@@ -186,6 +183,7 @@ function addNewBooking(id, date, roomNum) {
 };
 
 /* ------ Helper Functions ------ */
+
 function hideElement(element) {
   element.classList.add('hidden');
 };
@@ -198,8 +196,7 @@ function loadDashboard() {
   hideLoginView();
   loadAllBookings();
   generateCustomerBookings();
-
-}
+};
 
 function loadAllBookings() {
   currentCustomer.filterBookings(hotel);
@@ -256,7 +253,8 @@ function resetBookingsView() {
   roomSelection.value = '';
 };
 
-/* ------ Interpolation ------ */
+/* ------------ */
+
 function returnTotalSpent() {
   const amountSpent = currentCustomer.calculateTotalAmountSpent(hotel);
   bookingsMessage.innerHTML = ``;
@@ -295,18 +293,6 @@ function generateUpcomingBookingCard() {
   });
 };
 
-function getRoomImage(room) {
-  if (room.roomType === 'residential suite') {
-    room.image = "./images/residential-suite.png";
-  } else if (room.roomType === 'suite') {
-    room.image = "./images/suite.png";
-  } else if (room.roomType === 'junior suite') {
-    room.image = "./images/junior-suite.png";
-  } else {
-    room.image = "./images/single.png";
-  }
-};
-
 function loadAvailableRooms(checkInDate) {
   availableRooms = hotel.findAvailableRooms(checkInDate);
 
@@ -323,7 +309,6 @@ function loadAvailableRooms(checkInDate) {
         <h2 class="message-header" tabindex="0">${availableRooms.length} rooms available for your selected date</h2>`
 
     availableRooms.forEach(room => {
-      // let roomImage = getRoomImage(room);
       checkInAvailabilityContainer.innerHTML += `
       <div role="listitem" class="available-room-card" id="${room.number}">
       <p class="booking-card-message" tabindex="0">${room.roomType}</p>
@@ -335,7 +320,6 @@ function loadAvailableRooms(checkInDate) {
       </div>`;
     })
   }
-    // < img src = "${roomImage}" class="available-room" alt = "Room Number${room.number}" > 
 };
 
 function loadAvailableRoomsByType(selectedRoomType) {
@@ -366,6 +350,5 @@ function loadAvailableRoomsByType(selectedRoomType) {
         </div>`;
     })
   }
-  // < img src = "${roomImage}" class="available-room" alt = "Room Number${room.number}" > 
 };
 
