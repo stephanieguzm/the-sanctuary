@@ -9,21 +9,17 @@ A customer can search for available rooms by date and room type and reserve a ro
 
 If a room isn't available, the customer is notified and encouraged to alter their search. They can then return to their dashboard where they can see their new and previous bookings.
 
-## Contributors
-
-[Stephanie Guzman](https://github.com/stephanieguzm)
-
-Code Review by [Abby Luce](https://github.com/abbyluce)
-
-## Technologies Used
-
-- JavaScript
-- Webpack
-- Mocha
-- Chai
-- Node.js
-- CSS
-- HTML
+## Technologies
+![Javascript](https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E) 
+![CSS](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white) 
+![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
+![Mocha](https://img.shields.io/badge/-mocha-%238D6748?style=for-the-badge&logo=mocha&logoColor=white)
+![Chai](https://img.shields.io/badge/Chai-A30701?style=for-the-badge&logo=chai&logoColor=white")
+![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
+![Webpack](https://img.shields.io/badge/webpack-%238DD6F9.svg?style=for-the-badge&logo=webpack&logoColor=black) 
+![Figma](https://img.shields.io/badge/figma-%23F24E1E.svg?style=for-the-badge&logo=figma&logoColor=white)
+![Git](https://img.shields.io/badge/git-%23F05033.svg?style=for-the-badge&logo=git&logoColor=white)
+![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)
 
 ## Accessibility
 The project is fully tabbable, prioritizes semantic HTML use, and incorporates WAI-ARIA roles as needed.
@@ -79,4 +75,14 @@ This project utilizes the Overlook API which can be accessed [here](https://gith
 - Personalize user dashboard
 - Log out option
 - Add Wellness Center features
+
+
+## Contributors
+
+Stephanie Guzman 
+[Github](https://github.com/stephanieguzm)
+[LinkedIn](https://www.linkedin.com/in/stephanie-guzman-sdsw/)
+
+Code Review by [Abby Luce](https://github.com/abbyluce)
+
 
