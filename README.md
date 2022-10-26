@@ -1,6 +1,6 @@
 # The Sanctuary
 
-## Project Overview
+## About the Project
 [Project Spec - Part I](https://frontend.turing.edu/projects/overlook.html)
 
 The Sanctuary is a hotel management tool for customers to manage room bookings. Customers login to their hotel dashboard and see their past and upcoming bookings. 
@@ -76,7 +76,6 @@ This project utilizes the Overlook API which can be accessed [here](https://gith
 - Log out option
 - Add Wellness Center features
 
-
 ## Contributors
 
 Stephanie Guzman 
@@ -85,4 +84,8 @@ Stephanie Guzman
 
 Code Review by [Abby Luce](https://github.com/abbyluce)
 
+## Acknowledgements
 
+The following resources helped bring this project to life:<br>
+![MDN Web Docs](https://img.shields.io/badge/MDN_Web_Docs-black?style=for-the-badge&logo=mdnwebdocs&logoColor=white) <br>
+[![Turing School](https://img.shields.io/badge/Turing_School-030303?style=for-the-badge)](https://turing.edu/)
